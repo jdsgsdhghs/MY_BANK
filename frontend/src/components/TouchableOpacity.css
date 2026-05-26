@@ -1,0 +1,62 @@
+.touchable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.touchable:active {
+  transform: scale(0.96);
+}
+
+.touchable:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+}
+
+.touchable:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+}
+
+.touchable-primary {
+  background: #4f46e5;
+  color: #fff;
+}
+
+.touchable-primary:hover:not(:disabled) {
+  background: #4338ca;
+  box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+}
+
+.touchable-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.touchable-danger:hover:not(:disabled) {
+  background: #dc2626;
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.touchable-ghost {
+  background: transparent;
+  color: #374151;
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+}
+
+.touchable-ghost:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}

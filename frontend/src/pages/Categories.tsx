@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { api, ApiError, Category } from '../api/client';
+import TouchableOpacity from '../components/TouchableOpacity';
 import './Categories.css';
 
 export default function Categories() {
@@ -109,12 +110,12 @@ export default function Categories() {
               <li key={c.id}>
                 <span>{c.title}</span>
                 <span className="cat-actions">
-                  <button type="button" className="btn-ghost btn-sm" onClick={() => startEdit(c)}>
+                  <TouchableOpacity variant="ghost" onClick={() => startEdit(c)}>
                     Edit
-                  </button>
-                  <button type="button" className="btn-danger btn-sm" onClick={() => handleDelete(c.id)}>
+                  </TouchableOpacity>
+                  <TouchableOpacity variant="danger" onClick={() => handleDelete(c.id)}>
                     Delete
-                  </button>
+                  </TouchableOpacity>
                 </span>
               </li>
             ))}

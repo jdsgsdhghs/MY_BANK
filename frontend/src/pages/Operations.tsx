@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { api, ApiError, Category, Operation } from '../api/client';
+import TouchableOpacity from '../components/TouchableOpacity';
 import './Operations.css';
 
 interface FormState {
@@ -192,12 +193,12 @@ export default function Operations() {
                       {Number(op.amount).toFixed(2)} €
                     </td>
                     <td className="actions">
-                      <button type="button" className="btn-ghost btn-sm" onClick={() => startEdit(op)}>
+                      <TouchableOpacity variant="ghost" onClick={() => startEdit(op)}>
                         Edit
-                      </button>
-                      <button type="button" className="btn-danger btn-sm" onClick={() => handleDelete(op.id)}>
+                      </TouchableOpacity>
+                      <TouchableOpacity variant="danger" onClick={() => handleDelete(op.id)}>
                         Delete
-                      </button>
+                      </TouchableOpacity>
                     </td>
                   </tr>
                 ))}
