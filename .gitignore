@@ -1,0 +1,28 @@
+# Editors / OS
+.vscode/
+.idea/
+.claude/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Env
+.env.local
+.env.*.local
+.env.prod
+
+# Backend
+backend/vendor/
+backend/var/
+backend/config/jwt/*.pem
+backend/.phpunit.cache/
+backend/.php-cs-fixer.cache
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/.vite/
+
+# Docker
+*.log

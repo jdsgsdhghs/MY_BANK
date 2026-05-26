@@ -1,0 +1,65 @@
+.layout {
+  min-height: 100vh;
+}
+
+.layout-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.layout-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.brand-name {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.layout-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.layout-nav a {
+  color: var(--color-text-muted);
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  text-decoration: none;
+}
+.layout-nav a:hover { background: var(--color-bg); color: var(--color-primary); }
+.layout-nav a.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .layout-header-inner { justify-content: center; }
+  .layout-nav { order: 3; width: 100%; justify-content: center; }
+}
