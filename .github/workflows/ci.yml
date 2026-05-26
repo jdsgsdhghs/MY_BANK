@@ -12,15 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:16-alpine
+      mysql:
+        image: mysql:8.0
         env:
-          POSTGRES_DB: mybank_test
-          POSTGRES_USER: mybank
-          POSTGRES_PASSWORD: mybank
-        ports: ['5432:5432']
+          MYSQL_DATABASE: mybank_test
+          MYSQL_USER: mybank_user
+          MYSQL_PASSWORD: mybank
+          MYSQL_ROOT_PASSWORD: root
+        ports: ['3306:3306']
         options: >-
-          --health-cmd "pg_isready -U mybank"
+          --health-cmd "mysqladmin ping -h localhost -u mybank_user -pmybank"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
@@ -32,7 +33,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: intl, pdo_pgsql, zip, apcu
+          extensions: intl, pdo_mysql, zip, apcu
           coverage: none
           tools: composer:v2
 
@@ -57,7 +58,7 @@ jobs:
       - name: Create test database schema
         working-directory: backend
         env:
-          DATABASE_URL: "postgresql://mybank:mybank@127.0.0.1:5432/mybank_test?serverVersion=16&charset=utf8"
+          DATABASE_URL: "mysql://mybank_user:mybank@127.0.0.1:3306/mybank_test?serverVersion=8.0&charset=utf8mb4"
           APP_ENV: test
           JWT_PASSPHRASE: mybank_jwt_passphrase
         run: |
@@ -68,7 +69,7 @@ jobs:
       - name: Run PHPUnit
         working-directory: backend
         env:
-          DATABASE_URL: "postgresql://mybank:mybank@127.0.0.1:5432/mybank_test?serverVersion=16&charset=utf8"
+          DATABASE_URL: "mysql://mybank_user:mybank@127.0.0.1:3306/mybank_test?serverVersion=8.0&charset=utf8mb4"
           APP_ENV: test
           JWT_PASSPHRASE: mybank_jwt_passphrase
         run: vendor/bin/phpunit --testdox

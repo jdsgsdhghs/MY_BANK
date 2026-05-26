@@ -6,7 +6,6 @@ RUN apk add --no-cache \
     unzip \
     icu-dev \
     libzip-dev \
-    postgresql-dev \
     oniguruma-dev \
     autoconf \
     g++ \
@@ -15,7 +14,7 @@ RUN apk add --no-cache \
   && docker-php-ext-install \
     intl \
     pdo \
-    pdo_pgsql \
+    pdo_mysql \
     opcache \
     zip \
   && pecl install apcu \

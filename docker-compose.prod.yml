@@ -1,16 +1,17 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: mysql:8.0
     container_name: mybank_db_prod
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-mybank}
-      POSTGRES_USER: ${POSTGRES_USER:-mybank}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-mybank}
+      MYSQL_USER: ${MYSQL_USER:-mybank_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mybank}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER:-mybank_user}", "-p${MYSQL_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,7 +25,7 @@ services:
       APP_ENV: prod
       APP_DEBUG: 0
       APP_SECRET: ${APP_SECRET}
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-mybank}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-mybank}?serverVersion=16&charset=utf8"
+      DATABASE_URL: "mysql://${MYSQL_USER:-mybank_user}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DATABASE:-mybank}?serverVersion=8.0&charset=utf8mb4"
       JWT_PASSPHRASE: ${JWT_PASSPHRASE}
       CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-^https?://localhost(:[0-9]+)?$$}
     depends_on:
