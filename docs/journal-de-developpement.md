@@ -62,25 +62,6 @@
 
 **Pourquoi Docker ?** L'application combine PHP-FPM, Nginx, Node, et PostgreSQL — installer tout cela à la main rend chaque poste différent et fragile. Docker garantit qu'un développeur (sur Windows), un job CI (sur Ubuntu) et la prod (Linux) exécutent **exactement les mêmes binaires**.
 
-**Windows**
-1. Télécharger Docker Desktop : <https://www.docker.com/products/docker-desktop>.
-2. Installer, redémarrer.
-3. Cocher *Use WSL 2 based engine* dans les paramètres.
-4. Vérifier : `docker --version` et `docker compose version`.
-
-**macOS**
-1. Docker Desktop for Mac (Apple Silicon ou Intel) sur la même URL.
-2. Glisser dans `/Applications`, lancer, accepter les permissions.
-3. Vérifier : `docker --version`.
-
-**Linux (Ubuntu/Debian)**
-```bash
-sudo apt update
-sudo apt install -y docker.io docker-compose-plugin
-sudo usermod -aG docker $USER
-newgrp docker
-docker --version && docker compose version
-```
 
 ### 2.2 Pipeline CI/CD avec GitHub Actions
 
