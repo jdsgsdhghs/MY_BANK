@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import './Layout.css';
 
 export default function Layout() {
-  const { logout } = useAuth();
+  const { logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -26,6 +26,11 @@ export default function Layout() {
             <NavLink to="/categories" className={({ isActive }) => (isActive ? 'active' : '')}>
               Categories
             </NavLink>
+            {isAdmin && (
+              <NavLink to="/users" className={({ isActive }) => (isActive ? 'active' : '')}>
+                Users
+              </NavLink>
+            )}
           </nav>
           <button type="button" className="btn-ghost" onClick={handleLogout}>
             Log out

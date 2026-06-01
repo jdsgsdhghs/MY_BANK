@@ -28,15 +28,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['user:read'])]
     private array $roles = [];
 
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Operation::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Operation::class, orphanRemoval: true, cascade: ['remove'])]
     private Collection $operations;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Category::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Category::class, orphanRemoval: true, cascade: ['remove'])]
     private Collection $categories;
 
     public function __construct()

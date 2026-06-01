@@ -15,6 +15,13 @@ if [ ! -f config/jwt/private.pem ]; then
     openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:"$PASSPHRASE"
     openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout -passin pass:"$PASSPHRASE"
 fi
+# Ensure JWT keys are readable by php-fpm (www-data)
+chmod 644 config/jwt/private.pem config/jwt/public.pem 2>/dev/null || true
+
+# Ensure cache/log dirs exist and are writable by www-data
+mkdir -p var/cache var/log
+chown -R www-data:www-data var 2>/dev/null || true
+chmod -R u+rwX,g+rwX var 2>/dev/null || true
 
 # Wait for the DB and run migrations (skip in test, the test bootstrap handles it)
 if [ "${APP_ENV}" != "test" ]; then

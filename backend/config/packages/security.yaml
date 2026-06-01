@@ -26,10 +26,14 @@ security:
             stateless: true
             jwt: ~
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/health, roles: PUBLIC_ACCESS }
+        - { path: ^/api/admin, roles: ROLE_ADMIN }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

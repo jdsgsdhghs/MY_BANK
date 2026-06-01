@@ -48,3 +48,9 @@ export interface Category {
   id: number;
   title: string;
 }
+
+export interface AdminUser {
+  id: number;
+  email: string;
+  roles: string[];
+}

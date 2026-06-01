@@ -29,9 +29,9 @@ WORKDIR /var/www/html
 FROM base AS dev
 ENV APP_ENV=dev
 COPY composer.json composer.lock* symfony.lock* ./
-RUN composer install --no-interaction --no-scripts --no-progress || true
+RUN composer install --no-interaction --no-scripts --no-progress
 COPY . .
-RUN composer dump-autoload --optimize || true
+RUN composer dump-autoload --optimize
 CMD ["php-fpm"]
 
 # Prod stage

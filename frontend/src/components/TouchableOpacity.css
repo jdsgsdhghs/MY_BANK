@@ -3,24 +3,23 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 0.55rem 1rem;
   border: none;
-  border-radius: 12px;
-  font-size: 0.875rem;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.85rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  transition: opacity var(--transition-fast), transform 0.1s ease, box-shadow var(--transition-base);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-.touchable:active {
-  transform: scale(0.96);
-}
+.touchable:active { transform: scale(0.96); }
 
 .touchable:focus-visible {
-  outline: 2px solid #4f46e5;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -30,33 +29,32 @@
 }
 
 .touchable-primary {
-  background: #4f46e5;
+  background: var(--gradient-primary);
   color: #fff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
 }
-
 .touchable-primary:hover:not(:disabled) {
-  background: #4338ca;
-  box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
 }
 
 .touchable-danger {
-  background: #ef4444;
+  background: var(--gradient-danger);
   color: #fff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
-
 .touchable-danger:hover:not(:disabled) {
-  background: #dc2626;
-  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.32);
 }
 
 .touchable-ghost {
   background: transparent;
-  color: #374151;
-  box-shadow: none;
-  border: 1px solid #e5e7eb;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-border);
 }
-
 .touchable-ghost:hover:not(:disabled) {
-  background: #f3f4f6;
-  border-color: #d1d5db;
+  background: var(--color-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }

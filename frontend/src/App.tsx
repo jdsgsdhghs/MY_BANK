@@ -4,11 +4,19 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Operations from './pages/Operations';
 import Categories from './pages/Categories';
+import Users from './pages/Users';
 import Layout from './components/Layout';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const { token } = useAuth();
   return token ? children : <Navigate to="/login" replace />;
+}
+
+function AdminRoute({ children }: { children: JSX.Element }) {
+  const { token, isAdmin } = useAuth();
+  if (!token) return <Navigate to="/login" replace />;
+  if (!isAdmin) return <Navigate to="/operations" replace />;
+  return children;
 }
 
 export default function App() {
@@ -27,6 +35,14 @@ export default function App() {
         <Route index element={<Navigate to="/operations" replace />} />
         <Route path="operations" element={<Operations />} />
         <Route path="categories" element={<Categories />} />
+        <Route
+          path="users"
+          element={
+            <AdminRoute>
+              <Users />
+            </AdminRoute>
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
