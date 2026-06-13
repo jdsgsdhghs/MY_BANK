@@ -53,8 +53,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       token,
       user,
       isAdmin: !!user?.roles?.includes('ROLE_ADMIN'),
-      login: (t: string) => setToken(t),
-      logout: () => setToken(null),
+      login: (t: string) => {
+        // Persistance synchrone : le client API lit le token depuis
+        // localStorage. Sans ça, un fetch déclenché juste après login
+        // (navigation immédiate) partirait avant l'écriture du useEffect → 401.
+        localStorage.setItem(STORAGE_KEY, t);
+        setToken(t);
+      },
+      logout: () => {
+        localStorage.removeItem(STORAGE_KEY);
+        setToken(null);
+      },
     };
   }, [token]);
 
