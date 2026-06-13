@@ -27,8 +27,11 @@ services:
         value: "0"
       - key: APP_SECRET
         generateValue: true   # généré par Render, jamais dans Git
+      # Passphrase des clés JWT — DOIT être identique à celle utilisée pour
+      # générer private.pem/public.pem en local (openssl -pass pass:...).
+      # Ne PAS auto-générer : sinon Lexik ne peut pas déchiffrer la clé privée.
       - key: JWT_PASSPHRASE
-        generateValue: true
+        sync: false
       # Clés JWT persistantes (base64) — à renseigner dans le dashboard :
       #   base64 -w0 config/jwt/private.pem  → JWT_PRIVATE_KEY_BASE64
       #   base64 -w0 config/jwt/public.pem   → JWT_PUBLIC_KEY_BASE64
