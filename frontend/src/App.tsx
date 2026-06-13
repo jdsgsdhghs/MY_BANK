@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Operations from './pages/Operations';
 import Categories from './pages/Categories';
 import Users from './pages/Users';
+import Profile from './pages/Profile';
 import Layout from './components/Layout';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
@@ -35,6 +36,7 @@ export default function App() {
         <Route index element={<Navigate to="/operations" replace />} />
         <Route path="operations" element={<Operations />} />
         <Route path="categories" element={<Categories />} />
+        <Route path="profile" element={<Profile />} />
         <Route
           path="users"
           element={

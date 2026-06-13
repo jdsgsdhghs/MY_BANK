@@ -9,7 +9,8 @@
 **Produit :** *MyBank*, application web responsive (mobile / tablette / desktop, portrait + paysage), en **anglais**, permettant à un particulier :
 - de **s'authentifier** sur son compte personnel ;
 - de **gérer ses opérations** financières (CRUD complet : créer, lire, modifier, supprimer) ;
-- de **classer ses opérations en catégories** qu'il définit lui-même.
+- de **classer ses opérations en catégories** qu'il définit lui-même ;
+- de **modifier son profil** (changer son adresse email et/ou son mot de passe).
 
 **Modèle métier :**
 - Une **opération** = libellé + montant + date + catégorie (optionnelle).
@@ -109,6 +110,31 @@ Tous les écrans suivent une grille à 3 zones :
 └──────────────────────────────────────────────┘
 ```
 
+**Profile (tout utilisateur authentifié)**
+```
+┌──────────────────────────────────────────────┐
+│ [M] MyBank  Operations Categories ... Profile│
+├──────────────────────────────────────────────┤
+│ My profile                                   │
+│ Update your email address and password.      │
+│ ── [User] / [Admin] ─────────────────────────│
+│ ┌────────────────────────┐                   │
+│ │ Email                  │                   │
+│ └────────────────────────┘                   │
+│ ── Leave blank to keep current password ─────│
+│ ┌────────────────────────┐                   │
+│ │ New password           │                   │
+│ └────────────────────────┘                   │
+│ ┌────────────────────────┐                   │
+│ │ Confirm new password   │                   │
+│ └────────────────────────┘                   │
+│ ┌────────────────────────┐                   │
+│ │ Current password       │ (confirmation)    │
+│ └────────────────────────┘                   │
+│ [ Save changes ]                             │
+└──────────────────────────────────────────────┘
+```
+
 ### 3.c Maquette Figma
 
 À publier ici (lien public) :
@@ -124,10 +150,10 @@ Tous les écrans suivent une grille à 3 zones :
        └────┬────┘         └──────────┘
             │ (success)
             ▼
-   ┌──────────────────┐   ┌──────────────┐   ┌──────────────┐
-   │   Operations     │ ◄►│  Categories  │ ◄►│    Users     │
-   │   (default)      │   │              │   │ (admin only) │
-   └──────────────────┘   └──────────────┘   └──────────────┘
+   ┌──────────────┐  ┌────────────┐  ┌──────────┐  ┌──────────────┐
+   │  Operations  │◄►│ Categories │◄►│ Profile  │◄►│    Users     │
+   │  (default)   │  │            │  │          │  │ (admin only) │
+   └──────────────┘  └────────────┘  └──────────┘  └──────────────┘
             │
             ▼ (logout)
        ┌─────────┐
@@ -144,6 +170,7 @@ Routes effectives (React Router) :
 - `/register` (public)
 - `/operations` (protégée — redirection vers `/login` si non auth)
 - `/categories` (protégée)
+- `/profile` (protégée — tout utilisateur authentifié)
 - `/users` (protégée — admin uniquement, redirection vers `/operations` si non admin)
 - `/` → redirige vers `/operations`
 
@@ -159,6 +186,8 @@ Routes effectives (React Router) :
    │ User   │───┼──│  Login                │  │
    │ (Actor)│   │  │  CRUD operations      │  │
    └───▲────┘   │  │  CRUD categories      │  │
+       │        │  │  Edit own profile     │  │
+       │        │  │   (email, password)   │  │
        │        │  │  Logout               │  │
        │        │  └───────────────────────┘  │
        │ extends│  ┌───────────────────────┐  │
@@ -262,7 +291,44 @@ Cas d'erreur gérés :
 - `409 Conflict` si l'email est déjà utilisé.
 - À la suppression : `400` si l'admin tente de supprimer son propre compte.
 
-### 4.e Diagramme d'activité — Parcours utilisateur
+### 4.e Diagramme de séquence — Modification de son profil
+
+```
+User    Browser/React    fetch          API (Symfony)            DB
+ │         │              │                  │                    │
+ │ submit  │              │                  │                    │
+ ├────────►│              │                  │                    │
+ │         │ PUT /profile │                  │                    │
+ │         ├─────────────►│ PUT /api/profile │                    │
+ │         │              ├─────────────────►│                    │
+ │         │              │                  │ JWT verify         │
+ │         │              │                  │ check currentPwd   │
+ │         │              │                  │ (isPasswordValid)  │
+ │         │              │                  │ check email unique │
+ │         │              │                  ├───────────────────►│
+ │         │              │                  │                 ok │
+ │         │              │                  │◄───────────────────┤
+ │         │              │                  │ hash new password  │
+ │         │              │                  │ UPDATE user        │
+ │         │              │                  ├───────────────────►│
+ │         │              │                  │                 ok │
+ │         │              │                  │◄───────────────────┤
+ │         │              │                  │ create fresh JWT   │
+ │         │              │ 200 + user+token │                    │
+ │         │              │◄─────────────────┤                    │
+ │         │ login(token) │  (MAJ contexte)  │                    │
+ │ render  │              │                  │                    │
+ │◄────────┤              │                  │                    │
+```
+
+Cas d'erreur gérés :
+- `403 Forbidden` si le mot de passe actuel est absent ou incorrect (`isPasswordValid`).
+- `400 Bad Request` si aucun champ à modifier, ou si le nouveau mot de passe < 8 caractères.
+- `409 Conflict` si le nouvel email est déjà utilisé par un autre compte.
+
+> L'email étant embarqué dans le JWT (payload `email`/`roles`), l'API renvoie un **token rafraîchi** après mise à jour. Le frontend appelle `login(token)` pour resynchroniser l'identité sans déconnexion.
+
+### 4.f Diagramme d'activité — Parcours utilisateur
 
 ```
                            ● Start
@@ -303,8 +369,8 @@ Cas d'erreur gérés :
                   ┌──────────────────┐  ┌──────────────────┐
                   │ Show nav:        │  │ Show nav:        │
                   │ Operations,      │  │ Operations,      │
-                  │ Categories       │  │ Categories,      │
-                  │                  │  │ Users            │
+                  │ Categories,      │  │ Categories,      │
+                  │ Profile          │  │ Profile, Users   │
                   └────────┬─────────┘  └────────┬─────────┘
                            │                     │
                            └──────────┬──────────┘
@@ -397,4 +463,5 @@ Voir [`README.md`](../README.md) à la racine du dépôt.
 - `operations-list.png`
 - `operation-edit.png`
 - `categories.png`
+- `profile.png`
 - `mobile-operations.png`

@@ -7,6 +7,14 @@ framework:
     serializer:
         enabled: true
 
+when@prod:
+    framework:
+        # Derrière le proxy Render/nginx : faire confiance aux en-têtes
+        # X-Forwarded-* du proxy direct pour détecter HTTPS et l'IP cliente
+        # (indispensable au rate limiting par IP).
+        trusted_proxies: '%env(default::TRUSTED_PROXIES)%'
+        trusted_headers: ['x-forwarded-for', 'x-forwarded-proto', 'x-forwarded-port']
+
 when@test:
     framework:
         test: true

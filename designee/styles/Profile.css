@@ -1,0 +1,54 @@
+/* ============================================================================
+   Profile.css — profil utilisateur
+   Sécurité visible : sections claires (identité / mot de passe), confirmation
+   du mot de passe actuel mise en avant.
+   ========================================================================== */
+
+.profile-card { max-width: 540px; }
+
+/* En-tête : avatar initiale + email + badge rôle. */
+.profile-head { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.profile-avatar {
+  width: 56px; height: 56px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 22px;
+}
+.profile-head__id { display: flex; flex-direction: column; gap: 6px; }
+.profile-head__email { font-weight: 600; font-size: 16px; color: var(--color-text); word-break: break-all; }
+
+/* Formulaire en sections. */
+.profile-form { display: flex; flex-direction: column; gap: 18px; }
+.profile-section + .profile-section {
+  margin-top: 6px; padding-top: 22px;
+  border-top: 1px solid var(--color-border);
+}
+.profile-section__title {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+.profile-section__title svg { color: var(--color-primary); }
+.profile-section .field + .field { margin-top: 16px; }
+
+/* Encadré de réassurance pour le mot de passe actuel. */
+.confirm-current {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 16px;
+}
+.confirm-current .note {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12.5px; color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+.confirm-current .note svg { flex-shrink: 0; margin-top: 1px; color: var(--color-primary); }
+
+.profile-form .form-actions { display: flex; justify-content: flex-end; margin-top: 8px; }

@@ -21,6 +21,11 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            # Anti brute-force : 5 tentatives max par minute et par couple
+            # email + IP (symfony/rate-limiter).
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
         api:
             pattern: ^/api
             stateless: true

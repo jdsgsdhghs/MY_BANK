@@ -1,80 +1,187 @@
-.layout {
-  min-height: 100vh;
-}
+/* ============================================================================
+   Layout.css — coquille applicative
+   Desktop : sidebar fixe à gauche (navigation verticale, profil, déconnexion).
+   Mobile  : topbar compacte + barre d'onglets en bas (pattern app bancaire).
+   ========================================================================== */
 
-.layout-header {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+.layout { min-height: 100vh; min-height: 100dvh; }
+
+/* ---- Marque ------------------------------------------------------------- */
+.brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); }
+.brand:hover { text-decoration: none; }
+.brand__mark {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--hero-via), var(--hero-to));
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -.02em;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 2px 6px rgba(11, 59, 45, .25);
+}
+.brand__name { font-weight: 700; font-size: 17px; letter-spacing: -.02em; color: var(--color-text); }
+
+/* ---- Sidebar (≥ 961px) --------------------------------------------------- */
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 24px 16px 20px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  z-index: 40;
+}
+.sidebar .brand { padding: 0 8px; }
+
+.sidebar__nav { display: flex; flex-direction: column; gap: 3px; }
+.sidebar__nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: var(--radius-md);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.sidebar__nav a svg { flex-shrink: 0; opacity: .85; }
+.sidebar__nav a:hover { background: var(--color-surface-hover); color: var(--color-text); text-decoration: none; }
+.sidebar__nav a.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.sidebar__nav a.active svg { opacity: 1; }
+.sidebar__nav a:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* Bloc utilisateur + actions en bas de la sidebar. */
+.sidebar__footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 16px;
+}
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background var(--t-fast);
+}
+.sidebar__user:hover { background: var(--color-surface-hover); text-decoration: none; }
+.sidebar__avatar {
+  width: 38px; height: 38px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 14px;
+}
+.sidebar__user-meta { display: flex; flex-direction: column; min-width: 0; }
+.sidebar__user-email {
+  font-size: 13px; font-weight: 600; color: var(--color-text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sidebar__user-role { font-size: 11.5px; color: var(--color-text-muted); }
+
+.sidebar__actions { display: flex; align-items: center; gap: 8px; padding: 0 4px; }
+.sidebar__logout { flex: 1; justify-content: flex-start; gap: 9px; }
+
+/* ---- Topbar (mobile) ------------------------------------------------------ */
+.topbar {
+  display: none;
   position: sticky;
   top: 0;
   z-index: 50;
-}
-
-.layout-header-inner {
-  display: flex;
+  height: var(--topbar-height);
+  padding: 0 16px;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--color-border);
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.brand-mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: var(--gradient-primary);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-size: 1.05rem;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-}
-
-.brand-name {
-  color: var(--color-text);
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
-}
-
-.layout-nav {
-  display: flex;
-  gap: 0.3rem;
-  background: var(--color-bg);
-  padding: 0.3rem;
+.topbar__actions { display: flex; align-items: center; gap: 8px; }
+.topbar__logout {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
   border-radius: var(--radius-md);
-}
-
-.layout-nav a {
-  color: var(--color-text-muted);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: all var(--transition-base);
-}
-.layout-nav a:hover {
-  color: var(--color-text);
-}
-.layout-nav a.active {
+  border: 1px solid var(--color-border-strong);
   background: var(--color-surface);
-  color: var(--color-primary);
-  box-shadow: var(--shadow-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
 }
+.topbar__logout:hover { background: var(--color-surface-hover); color: var(--color-text); }
+.topbar__logout:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
-@media (max-width: 600px) {
-  .layout-header-inner { justify-content: center; }
-  .layout-nav { order: 3; width: 100%; justify-content: center; }
+/* ---- Zone principale ------------------------------------------------------ */
+.app-main { margin-left: var(--sidebar-width); }
+
+/* ---- Bottom nav (mobile) -------------------------------------------------- */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 50;
+  height: calc(var(--bottomnav-height) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-top: 1px solid var(--color-border);
+}
+.bottom-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--t-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav a:hover { text-decoration: none; }
+.bottom-nav a.active { color: var(--color-primary); }
+.bottom-nav a:focus-visible { outline: none; box-shadow: inset var(--focus-ring); border-radius: var(--radius-sm); }
+
+/* ---- Bascule de thème ----------------------------------------------------- */
+.theme-toggle {
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.theme-toggle:hover { background: var(--color-surface-hover); color: var(--color-text); }
+.theme-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ---- Bascule responsive --------------------------------------------------- */
+@media (max-width: 960px) {
+  .sidebar { display: none; }
+  .app-main { margin-left: 0; }
+  .topbar { display: flex; }
+  .bottom-nav { display: flex; }
 }

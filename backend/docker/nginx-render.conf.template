@@ -1,10 +1,11 @@
 # ============================================================================
-# Nginx — environnement de DÉVELOPPEMENT (docker-compose.yml)
-# Reverse proxy vers le conteneur PHP-FPM `backend`.
+# Nginx — image Render (template : ${PORT} substitué au démarrage par envsubst)
+# Sert l'API Symfony via PHP-FPM local (127.0.0.1:9000).
+# TLS terminé par Render en amont — les headers de sécurité restent utiles.
 # ============================================================================
 
 server {
-    listen 80;
+    listen ${PORT};
     server_name _;
     root /var/www/html/public;
 
@@ -16,12 +17,15 @@ server {
     gzip_vary on;
     gzip_types application/json application/problem+json text/plain;
 
-    # --- Headers de sécurité (alignés sur la prod pour éviter les surprises) --
+    # --- Headers de sécurité (OWASP) ------------------------------------------
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "DENY" always;
     add_header Referrer-Policy "no-referrer" always;
     add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    # API JSON pure : aucun contenu actif autorisé.
     add_header Content-Security-Policy "default-src 'none'; frame-ancestors 'none'" always;
+    # HSTS — Render sert toujours en HTTPS.
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     # --- Routage Symfony -------------------------------------------------------
     location / {
@@ -29,25 +33,29 @@ server {
     }
 
     location ~ ^/index\.php(/|$) {
-        fastcgi_pass backend:9000;
+        fastcgi_pass 127.0.0.1:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
-        fastcgi_read_timeout 60s;
+        # Derrière le proxy Render : laisser Symfony voir le schéma réel.
+        fastcgi_param HTTPS on;
+        fastcgi_read_timeout 35s;
         internal;
     }
 
+    # Aucun autre PHP ne doit être exécutable.
     location ~ \.php$ {
         return 404;
     }
 
+    # Fichiers cachés (sauf .well-known).
     location ~ /\.(?!well-known) {
         deny all;
     }
 
     client_max_body_size 10M;
 
-    error_log /var/log/nginx/error.log;
-    access_log /var/log/nginx/access.log;
+    access_log /dev/stdout;
+    error_log /dev/stderr warn;
 }

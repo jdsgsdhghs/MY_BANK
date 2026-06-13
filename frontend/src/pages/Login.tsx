@@ -2,6 +2,8 @@ import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { api, ApiError } from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import PasswordField from '../components/PasswordField';
+import { LockIcon, ShieldIcon, TrendingUpIcon, WalletIcon } from '../components/icons';
 import './Auth.css';
 
 export default function Login() {
@@ -21,8 +23,8 @@ export default function Login() {
       login(res.token);
       navigate('/operations');
     } catch (err) {
-      if (err instanceof ApiError) setError('Invalid credentials');
-      else setError('Unable to connect. Try again later.');
+      if (err instanceof ApiError) setError('Identifiants invalides');
+      else setError('Connexion impossible. Réessayez plus tard.');
     } finally {
       setSubmitting(false);
     }
@@ -30,46 +32,73 @@ export default function Login() {
 
   return (
     <div className="auth-shell">
-      <div className="auth-card card">
-        <div className="auth-brand">
-          <span className="brand-mark">M</span>
-          <h1>MyBank</h1>
+      {/* Panneau de marque (desktop) */}
+      <aside className="auth-pane" aria-hidden="true">
+        <div className="auth-pane__brand">
+          <span className="brand__mark">M</span>
+          <span className="brand__name">MyBank</span>
         </div>
-        <p className="auth-sub">Sign in to manage your expenses.</p>
+        <div className="auth-pane__body">
+          <h2>Votre argent, en toute clarté.</h2>
+          <p>Suivez vos revenus et vos dépenses dans une interface simple, lisible et sécurisée.</p>
+          <ul className="auth-pane__points">
+            <li><ShieldIcon size={18} /> Connexion chiffrée de bout en bout</li>
+            <li><WalletIcon size={18} /> Solde et opérations en temps réel</li>
+            <li><TrendingUpIcon size={18} /> Des catégories pour mieux décider</li>
+          </ul>
+        </div>
+        <div className="auth-pane__foot">Vos données restent privées. Toujours.</div>
+      </aside>
 
-        {error && <div className="alert alert-error" role="alert">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+      {/* Formulaire */}
+      <div className="auth-side">
+        <div className="auth-card">
+          <div className="auth-brand">
+            <span className="brand__mark">M</span>
+            <span className="brand__name">MyBank</span>
           </div>
-          <div className="field">
-            <label htmlFor="password">Password</label>
-            <input
+          <h1>Bonjour, content de vous revoir</h1>
+          <p className="auth-subtitle">Connectez-vous pour accéder à vos opérations.</p>
+
+          {error && <div className="alert alert-error" role="alert">{error}</div>}
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="field">
+              <label htmlFor="email">Adresse e-mail</label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="vous@exemple.fr"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <PasswordField
+              label="Mot de passe"
               id="password"
-              type="password"
               autoComplete="current-password"
               required
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
-          <button type="submit" className="btn-primary" disabled={submitting} style={{ width: '100%' }}>
-            {submitting ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
 
-        <p className="auth-foot">
-          No account? <Link to="/register">Create one</Link>
-        </p>
+            <button type="submit" className="btn-primary btn-block" disabled={submitting}>
+              {submitting ? 'Connexion…' : 'Se connecter'}
+            </button>
+          </form>
+
+          <div className="auth-secure">
+            <LockIcon size={15} />
+            Connexion chiffrée — vos identifiants ne sont jamais partagés.
+          </div>
+          <p className="auth-switch">
+            Pas encore de compte ? <Link to="/register">Créer un compte</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

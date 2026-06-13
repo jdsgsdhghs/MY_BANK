@@ -1,0 +1,103 @@
+/* ============================================================================
+   Auth.css — Login & Register
+   Écran de confiance : surface calme, signaux de sécurité visibles,
+   validation explicite mais non alarmiste. Plus de dégradé animé criard.
+   ========================================================================== */
+
+.auth-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background: var(--color-bg);
+  /* Trame végétale très discrète, statique (pas d'animation). */
+  background-image:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--color-primary) 7%, transparent), transparent 42%),
+    radial-gradient(circle at 88% 88%, color-mix(in srgb, var(--color-secondary) 6%, transparent), transparent 46%);
+  position: relative;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 40px 36px 32px;
+  animation: slideDown var(--t-base);
+}
+@media (max-width: 600px) { .auth-card { padding: 30px 22px 26px; border-radius: var(--radius-lg); } }
+
+/* En-tête de carte : marque + titre + sous-titre. */
+.auth-brand {
+  display: flex; align-items: center; gap: 11px;
+  margin-bottom: 26px;
+}
+.auth-brand .brand__mark { width: 38px; height: 38px; font-size: 20px; border-radius: 11px; }
+.auth-brand .brand__name { font-size: 19px; }
+
+.auth-card h1 {
+  font-size: 24px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+.auth-card .auth-subtitle {
+  color: var(--color-text-muted);
+  font-size: 14.5px;
+  margin-bottom: 26px;
+}
+
+/* Formulaire. */
+.auth-form { display: flex; flex-direction: column; gap: 16px; }
+.auth-form .btn-primary { margin-top: 6px; }
+
+/* Champ mot de passe avec bouton « afficher ». */
+.password-field { position: relative; }
+.password-field input { padding-right: 46px; }
+.password-toggle {
+  position: absolute;
+  right: 6px; bottom: 6px;
+  width: 32px; height: 32px;
+  min-height: 0;
+  display: grid; place-items: center;
+  border: none; background: transparent;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.password-toggle:hover { color: var(--color-text); background: var(--color-surface-hover); }
+.password-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* Jauge de robustesse (Register) — purement visuelle, basée sur la longueur. */
+.pw-meter { display: flex; gap: 5px; margin-top: 2px; }
+.pw-meter span {
+  flex: 1; height: 4px; border-radius: var(--radius-pill);
+  background: var(--color-border);
+  transition: background var(--t-base);
+}
+.pw-meter[data-score="1"] span:nth-child(1) { background: var(--color-warning); }
+.pw-meter[data-score="2"] span:nth-child(-n+2) { background: var(--color-warning); }
+.pw-meter[data-score="3"] span:nth-child(-n+3) { background: var(--color-primary); }
+.pw-meter[data-score="4"] span { background: var(--color-primary); }
+.pw-hint { font-size: 12.5px; color: var(--color-text-subtle); margin-top: 6px; }
+
+/* Bandeau de sécurité (réassurance). */
+.auth-secure {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12.5px;
+  color: var(--color-text-subtle);
+}
+.auth-secure svg { flex-shrink: 0; color: var(--color-primary); }
+
+/* Lien bas de carte. */
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+.auth-switch a { font-weight: 600; }

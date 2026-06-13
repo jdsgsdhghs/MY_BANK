@@ -10,7 +10,7 @@
   align-items: end;
 }
 .user-form .checkbox-row { min-height: 44px; }
-.user-form .field-submit { flex-direction: row; gap: 12px; align-items: center; }
+.user-form .field-submit .btn-primary { width: 100%; }
 @media (max-width: 900px) { .user-form { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .user-form { grid-template-columns: 1fr; } }
 
@@ -39,3 +39,5 @@
 .user-item .user-email { font-weight: 500; color: var(--color-text); word-break: break-all; }
 .user-item .user-badges { display: inline-flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
 .user-item .actions { display: inline-flex; gap: 4px; }
+
+/* Bouton Delete désactivé sur soi-même : géré par :disabled global. */

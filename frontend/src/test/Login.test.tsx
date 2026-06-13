@@ -25,9 +25,9 @@ describe('Login page', () => {
 
   it('renders inputs and submit button', () => {
     renderLogin();
-    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+    expect(screen.getByLabelText('Adresse e-mail')).toBeInTheDocument();
+    expect(screen.getByLabelText('Mot de passe')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /se connecter/i })).toBeInTheDocument();
   });
 
   it('shows error on invalid credentials', async () => {
@@ -39,12 +39,12 @@ describe('Login page', () => {
     ));
 
     renderLogin();
-    await userEvent.type(screen.getByLabelText(/email/i), 'wrong@example.com');
-    await userEvent.type(screen.getByLabelText(/password/i), 'wrongpass');
-    await userEvent.click(screen.getByRole('button', { name: /sign in/i }));
+    await userEvent.type(screen.getByLabelText('Adresse e-mail'), 'wrong@example.com');
+    await userEvent.type(screen.getByLabelText('Mot de passe'), 'wrongpass');
+    await userEvent.click(screen.getByRole('button', { name: /se connecter/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(/invalid credentials/i);
+      expect(screen.getByRole('alert')).toHaveTextContent(/identifiants invalides/i);
     });
   });
 
@@ -57,9 +57,9 @@ describe('Login page', () => {
     ));
 
     renderLogin();
-    await userEvent.type(screen.getByLabelText(/email/i), 'user@example.com');
-    await userEvent.type(screen.getByLabelText(/password/i), 'password123');
-    await userEvent.click(screen.getByRole('button', { name: /sign in/i }));
+    await userEvent.type(screen.getByLabelText('Adresse e-mail'), 'user@example.com');
+    await userEvent.type(screen.getByLabelText('Mot de passe'), 'password123');
+    await userEvent.click(screen.getByRole('button', { name: /se connecter/i }));
 
     await waitFor(() => {
       expect(screen.getByText('OPS PAGE')).toBeInTheDocument();

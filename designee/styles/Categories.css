@@ -18,11 +18,11 @@
 }
 .category-item:hover { background: var(--color-surface-hover); }
 
-/* Puce ronde teintée à la marque. */
+/* Puce ronde teintée à la marque (remplace l'ancienne puce dégradée). */
 .category-item .dot {
   width: 12px; height: 12px; flex-shrink: 0;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--hero-via), var(--hero-to));
+  background: var(--color-primary);
   box-shadow: 0 0 0 4px var(--color-primary-soft);
 }
 .category-item .title { flex: 1; font-weight: 500; color: var(--color-text); }
@@ -34,4 +34,4 @@
 
 /* Édition en ligne. */
 .category-item.editing { background: var(--color-primary-soft); }
-.category-item.editing .actions { opacity: 1; }
+.category-item .edit-input { max-width: 280px; }

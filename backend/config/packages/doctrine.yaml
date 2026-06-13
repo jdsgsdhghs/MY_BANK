@@ -18,6 +18,13 @@ doctrine:
 
 when@prod:
     doctrine:
+        # MySQL managé avec TLS obligatoire (ex. Aiven) : déposer le certificat
+        # CA du fournisseur en « Secret File » Render (/etc/secrets/ca.pem),
+        # définir DATABASE_SSL_CA=/etc/secrets/ca.pem puis décommenter :
+        # dbal:
+        #     options:
+        #         # PDO::MYSQL_ATTR_SSL_CA
+        #         1009: '%env(DATABASE_SSL_CA)%'
         orm:
             entity_managers:
                 default:

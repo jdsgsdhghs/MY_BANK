@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { api, ApiError, AdminUser } from '../api/client';
 import { useAuth } from '../context/AuthContext';
-import TouchableOpacity from '../components/TouchableOpacity';
+import { EditIcon, TrashIcon, UserIcon } from '../components/icons';
 import './Users.css';
 
 interface FormState {
@@ -30,7 +30,7 @@ export default function Users() {
     try {
       setUsers(await api.get<AdminUser[]>('/admin/users'));
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Unable to load users');
+      setError(err instanceof ApiError ? err.message : 'Chargement des utilisateurs impossible');
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ export default function Users() {
         await api.put(`/admin/users/${editingId}`, payload);
       } else {
         if (!form.password) {
-          setError('Password is required for a new user');
+          setError('Le mot de passe est requis pour un nouvel utilisateur');
           return;
         }
         await api.post('/admin/users', { email, password: form.password, roles });
@@ -63,7 +63,7 @@ export default function Users() {
       resetForm();
       await load();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Save failed');
+      setError(err instanceof ApiError ? err.message : "Échec de l'enregistrement");
     }
   }
 
@@ -78,115 +78,132 @@ export default function Users() {
 
   async function handleDelete(u: AdminUser) {
     if (currentUser?.id === u.id) {
-      setError('You cannot delete your own account');
+      setError('Vous ne pouvez pas supprimer votre propre compte');
       return;
     }
-    if (!confirm(`Delete user ${u.email}? All their data will be lost.`)) return;
+    if (!confirm(`Supprimer l'utilisateur ${u.email} ? Toutes ses données seront perdues.`)) return;
     try {
       await api.delete(`/admin/users/${u.id}`);
       await load();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Delete failed');
+      setError(err instanceof ApiError ? err.message : 'Échec de la suppression');
     }
   }
 
   return (
     <div className="users-page">
-      <header className="page-header">
-        <div>
-          <h2>Users</h2>
-          <p className="muted">Manage accounts and admin privileges.</p>
-        </div>
-      </header>
+      <div className="page-header">
+        <h2>Utilisateurs</h2>
+        <p className="subtitle">Administration des comptes — réservé aux administrateurs.</p>
+      </div>
 
       {error && <div className="alert alert-error" role="alert">{error}</div>}
 
-      <section className="card">
-        <h3>{editingId ? 'Edit user' : 'New user'}</h3>
-        <form onSubmit={handleSubmit} className="user-form">
+      <div className="card">
+        <div className="card-title">{editingId ? "Modifier l'utilisateur" : 'Nouvel utilisateur'}</div>
+        <form className="user-form" onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="user-email">Email</label>
+            <label htmlFor="user-email">Adresse e-mail</label>
             <input
               id="user-email"
               type="email"
               required
+              placeholder="nom@exemple.fr"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </div>
           <div className="field">
             <label htmlFor="user-password">
-              Password {editingId && <span className="muted">(leave blank to keep current)</span>}
+              Mot de passe {editingId && <span className="hint">(vide = inchangé)</span>}
             </label>
             <input
               id="user-password"
               type="password"
               minLength={editingId ? 0 : 8}
+              placeholder="••••••••"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
           </div>
-          <div className="field checkbox-field">
-            <label>
+          <div className="field">
+            <label className="field-label" style={{ visibility: 'hidden' }}>Rôle</label>
+            <div className="checkbox-row">
               <input
+                id="user-admin"
                 type="checkbox"
                 checked={form.isAdmin}
                 onChange={(e) => setForm({ ...form, isAdmin: e.target.checked })}
               />
-              Administrator
-            </label>
+              <label htmlFor="user-admin">Administrateur</label>
+            </div>
           </div>
-          <div className="form-actions">
-            <button type="submit" className="btn-primary">
-              {editingId ? 'Update' : 'Create'}
-            </button>
+          <div className="field field-submit">
+            <label className="field-label" style={{ visibility: 'hidden' }}>.</label>
+            <button type="submit" className="btn-primary">{editingId ? 'Mettre à jour' : 'Créer'}</button>
             {editingId && (
-              <button type="button" className="btn-ghost" onClick={resetForm}>
-                Cancel
-              </button>
+              <button type="button" className="btn-ghost" onClick={resetForm}>Annuler</button>
             )}
           </div>
         </form>
-      </section>
+      </div>
 
-      <section className="card">
-        <h3>All users</h3>
+      <div className="card">
+        <div className="card-title">Comptes existants</div>
+
         {loading ? (
-          <p className="muted">Loading...</p>
+          <div className="user-list">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div className="user-item" key={i}>
+                <span className="skeleton" style={{ width: 38, height: 38, borderRadius: '50%' }} />
+                <span className="skeleton skeleton-line" style={{ flex: 1, maxWidth: 220 }} />
+              </div>
+            ))}
+          </div>
         ) : users.length === 0 ? (
-          <p className="muted">No users yet.</p>
+          <div className="empty-state">
+            <div className="empty-icon"><UserIcon size={24} /></div>
+            <h3>Aucun utilisateur</h3>
+            <p>Créez le premier compte avec le formulaire ci-dessus.</p>
+          </div>
         ) : (
-          <ul className="user-list">
+          <div className="user-list">
             {users.map((u) => {
               const isAdmin = u.roles.includes('ROLE_ADMIN');
               const isSelf = currentUser?.id === u.id;
+              const initials = u.email.slice(0, 2).toUpperCase();
               return (
-                <li key={u.id}>
-                  <div className="user-info">
-                    <span className="user-email">{u.email}</span>
-                    <span className={`badge ${isAdmin ? 'badge-admin' : 'badge-user'}`}>
-                      {isAdmin ? 'Admin' : 'User'}
-                    </span>
-                    {isSelf && <span className="badge badge-self">You</span>}
+                <div className="user-item" key={u.id}>
+                  <span className="user-avatar">{initials}</span>
+                  <div className="user-main">
+                    <div className="user-email">{u.email}</div>
+                    <div className="user-badges">
+                      <span className={`badge ${isAdmin ? 'badge-admin' : 'badge-user'}`}>
+                        {isAdmin ? 'Admin' : 'Utilisateur'}
+                      </span>
+                      {isSelf && <span className="badge badge-you">Vous</span>}
+                    </div>
                   </div>
-                  <span className="user-actions">
-                    <TouchableOpacity variant="ghost" onClick={() => startEdit(u)}>
-                      Edit
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      variant="danger"
+                  <span className="actions">
+                    <button className="btn-ghost btn-sm btn-icon" aria-label="Modifier" onClick={() => startEdit(u)}>
+                      <EditIcon size={15} />
+                    </button>
+                    <button
+                      className="btn-danger btn-sm btn-icon"
+                      aria-label="Supprimer"
                       onClick={() => handleDelete(u)}
                       disabled={isSelf}
+                      title={isSelf ? 'Vous ne pouvez pas vous supprimer' : undefined}
                     >
-                      Delete
-                    </TouchableOpacity>
+                      <TrashIcon size={15} />
+                    </button>
                   </span>
-                </li>
+                </div>
               );
             })}
-          </ul>
+          </div>
         )}
-      </section>
+      </div>
     </div>
   );
 }

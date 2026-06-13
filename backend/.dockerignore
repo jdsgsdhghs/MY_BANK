@@ -3,3 +3,6 @@ var
 .phpunit.cache
 config/jwt/*.pem
 .git
+.env.local
+.env.*.local
+tests

@@ -1,84 +1,192 @@
+/* ============================================================================
+   Auth.css — Login & Register
+   Desktop : écran scindé — panneau de marque émeraude + formulaire.
+   Mobile  : carte centrée sur fond calme. Signaux de sécurité visibles.
+   ========================================================================== */
+
 .auth-shell {
   min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(380px, 44%) 1fr;
+  background: var(--color-bg);
+}
+
+/* ---- Panneau de marque (gauche) ------------------------------------------ */
+.auth-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 44px 48px;
+  color: var(--hero-text);
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(255, 255, 255, .10), transparent 50%),
+    radial-gradient(100% 80% at 0% 100%, rgba(0, 0, 0, .25), transparent 55%),
+    linear-gradient(160deg, var(--hero-from), var(--hero-via) 55%, var(--hero-to));
+}
+.auth-pane__brand { display: flex; align-items: center; gap: 11px; }
+.auth-pane__brand .brand__mark {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 20px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22);
+}
+.auth-pane__brand .brand__name {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 19px; letter-spacing: -.02em;
+  color: var(--hero-text);
+}
+
+.auth-pane__body { max-width: 380px; }
+.auth-pane__body h2 {
+  font-size: clamp(26px, 2.6vw, 34px);
+  color: var(--hero-text);
+  line-height: 1.18;
+  margin-bottom: 12px;
+}
+.auth-pane__body p { color: var(--hero-text-muted); font-size: 15.5px; }
+
+.auth-pane__points {
+  list-style: none;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.auth-pane__points li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14.5px; font-weight: 500;
+  color: var(--hero-text);
+}
+.auth-pane__points li svg {
+  flex-shrink: 0;
+  padding: 7px;
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, .12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+
+.auth-pane__foot { font-size: 13px; color: var(--hero-text-muted); }
+
+/* ---- Côté formulaire ------------------------------------------------------ */
+.auth-side {
   display: grid;
   place-items: center;
-  padding: 1.5rem;
-  background: var(--gradient-primary);
-  background-size: 200% 200%;
-  animation: gradientShift 15s ease infinite;
-  position: relative;
-  overflow: hidden;
-}
-
-.auth-shell::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  padding: 32px 24px;
 }
 
 .auth-card {
   width: 100%;
-  max-width: 440px;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  max-width: 430px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: 2.5rem;
-  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  position: relative;
-  animation: fadeIn 0.5s ease;
+  box-shadow: var(--shadow-md);
+  padding: 38px 36px 30px;
+  animation: slideDown var(--t-base);
 }
 
+/* En-tête de carte : marque répétée seulement quand le panneau est masqué. */
 .auth-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 0.5rem;
+  display: none;
+  align-items: center; gap: 11px;
+  margin-bottom: 26px;
 }
-
-.auth-brand h1 {
-  margin: 0;
-  font-size: 1.625rem;
-  letter-spacing: -0.02em;
-}
-
-.auth-brand .brand-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: var(--gradient-primary);
+.auth-brand .brand__mark {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--hero-via), var(--hero-to));
   color: #fff;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-size: 1.25rem;
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 20px; letter-spacing: -.02em;
 }
+.auth-brand .brand__name { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -.02em; color: var(--color-text); }
 
-.auth-sub {
+.auth-card h1 {
+  font-size: 24px;
+  margin-bottom: 6px;
+  color: var(--color-text);
+}
+.auth-card .auth-subtitle {
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  font-size: 14.5px;
+  margin-bottom: 26px;
 }
 
-.auth-foot {
+/* Formulaire. */
+.auth-form { display: flex; flex-direction: column; gap: 16px; }
+.auth-form .btn-primary { margin-top: 6px; }
+
+/* Champ mot de passe avec bouton « afficher ». */
+.password-field { position: relative; }
+.password-field input { padding-right: 46px; }
+.password-toggle {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  width: 32px; height: 32px;
+  min-height: 0;
+  display: grid; place-items: center;
+  border: none; background: transparent;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.password-toggle:hover { color: var(--color-text); background: var(--color-surface-hover); }
+.password-toggle:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* Jauge de robustesse (Register). */
+.pw-meter { display: flex; gap: 5px; margin-top: 8px; }
+.pw-meter span {
+  flex: 1; height: 4px; border-radius: var(--radius-pill);
+  background: var(--color-border);
+  transition: background var(--t-base);
+}
+.pw-meter[data-score="1"] span:nth-child(1) { background: var(--color-warning); }
+.pw-meter[data-score="2"] span:nth-child(-n+2) { background: var(--color-warning); }
+.pw-meter[data-score="3"] span:nth-child(-n+3) { background: var(--color-primary); }
+.pw-meter[data-score="4"] span { background: var(--color-primary); }
+.pw-hint { font-size: 12.5px; color: var(--color-text-subtle); margin-top: 6px; }
+
+/* Bandeau de sécurité (réassurance). */
+.auth-secure {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--color-border);
+  font-size: 12.5px;
+  color: var(--color-text-subtle);
+}
+.auth-secure svg { flex-shrink: 0; color: var(--color-primary); }
+
+/* Lien bas de carte. */
+.auth-switch {
   text-align: center;
-  margin-top: 1.25rem;
+  margin-top: 20px;
+  font-size: 14px;
   color: var(--color-text-muted);
-  font-size: 0.9rem;
 }
+.auth-switch a { font-weight: 600; }
 
-.auth-foot a {
-  color: var(--color-primary);
-  font-weight: 600;
+/* ---- Responsive ----------------------------------------------------------- */
+@media (max-width: 920px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+    place-items: center;
+    background-image:
+      radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--color-primary) 7%, transparent), transparent 42%),
+      radial-gradient(circle at 88% 88%, color-mix(in srgb, var(--color-secondary) 6%, transparent), transparent 46%);
+  }
+  .auth-pane { display: none; }
+  .auth-brand { display: flex; }
+}
+@media (max-width: 600px) {
+  .auth-side { padding: 22px 16px; }
+  .auth-card { padding: 30px 22px 26px; border-radius: var(--radius-lg); }
 }

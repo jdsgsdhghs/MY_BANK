@@ -1,7 +1,20 @@
+# ============================================================================
+# MyBank — environnement de DÉVELOPPEMENT
+#
+#   docker compose up -d          → API sur http://localhost:8080/api
+#   phpMyAdmin                    → http://localhost:8081
+#   Frontend : lancé en local     → cd frontend && npm run dev (port 5173)
+#
+# La production n'utilise PAS ce fichier (Render + Vercel + MySQL managé).
+# ============================================================================
+
+name: mybank
+
 services:
   db:
     image: mysql:8.0
     container_name: mybank_db
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: mybank
       MYSQL_USER: mybank_user
@@ -16,6 +29,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      start_period: 15s
     networks:
       - mybank
 
@@ -24,6 +38,7 @@ services:
       context: ./backend
       target: dev
     container_name: mybank_backend
+    restart: unless-stopped
     environment:
       APP_ENV: dev
       APP_DEBUG: 1
@@ -36,6 +51,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "php -r 'exit(0);'"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     networks:
       - mybank
     entrypoint: ["/bin/sh", "/var/www/html/docker-entrypoint.sh"]
@@ -44,6 +64,7 @@ services:
   nginx:
     image: nginx:1.27-alpine
     container_name: mybank_nginx
+    restart: unless-stopped
     ports:
       - "8080:80"
     volumes:
@@ -51,31 +72,35 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/api/health | grep -q ok"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     networks:
       - mybank
 
-  frontend:
-    build:
-      context: ./frontend
-      target: dev
-    container_name: mybank_frontend
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: mybank_phpmyadmin
+    restart: unless-stopped
     environment:
-      VITE_API_URL: http://localhost:8080/api
-    volumes:
-      - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
+      PMA_HOST: db
+      PMA_USER: mybank_user
+      PMA_PASSWORD: mybank
+      UPLOAD_LIMIT: 32M
     ports:
-      - "5173:5173"
+      - "8081:80"
     depends_on:
-      - backend
+      db:
+        condition: service_healthy
     networks:
       - mybank
-    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 
 volumes:
   db_data:
   backend_vendor:
-  frontend_node_modules:
 
 networks:
   mybank:

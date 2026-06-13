@@ -6,7 +6,7 @@ export class ApiError extends Error {
   constructor(public status: number, message: string, public details?: unknown) {
     super(message);
   }
-}
+} 
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = localStorage.getItem(STORAGE_KEY);
@@ -50,6 +50,12 @@ export interface Category {
 }
 
 export interface AdminUser {
+  id: number;
+  email: string;
+  roles: string[];
+}
+
+export interface Profile {
   id: number;
   email: string;
   roles: string[];

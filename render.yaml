@@ -1,0 +1,47 @@
+# ============================================================================
+# Render Blueprint — backend MyBank (Symfony 7.3, Docker)
+#
+# Le stage `render` du Dockerfile (dernier du fichier, donc construit par
+# défaut) embarque nginx + PHP-FPM et écoute sur $PORT.
+#
+# La base MySQL est EXTERNE (Render ne fournit pas de MySQL managé) :
+# renseigner DATABASE_URL vers le fournisseur choisi (ex. Aiven, plan gratuit).
+#
+# Déploiement : Dashboard Render → New → Blueprint → sélectionner ce repo.
+# ============================================================================
+
+services:
+  - type: web
+    name: mybank-backend
+    runtime: docker
+    plan: free
+    region: frankfurt
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true          # GitHub → Render à chaque push sur main
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: "0"
+      - key: APP_SECRET
+        generateValue: true   # généré par Render, jamais dans Git
+      - key: JWT_PASSPHRASE
+        generateValue: true
+      # Clés JWT persistantes (base64) — à renseigner dans le dashboard :
+      #   base64 -w0 config/jwt/private.pem  → JWT_PRIVATE_KEY_BASE64
+      #   base64 -w0 config/jwt/public.pem   → JWT_PUBLIC_KEY_BASE64
+      - key: JWT_PRIVATE_KEY_BASE64
+        sync: false
+      - key: JWT_PUBLIC_KEY_BASE64
+        sync: false
+      # MySQL managé externe : mysql://user:pass@host:port/db?serverVersion=8.0&charset=utf8mb4
+      - key: DATABASE_URL
+        sync: false
+      # Domaine Vercel du frontend (regex) : ^https://VOTRE-APP\.vercel\.app$
+      - key: CORS_ALLOW_ORIGIN
+        sync: false
+      # Proxy Render en frontal.
+      - key: TRUSTED_PROXIES
+        value: "127.0.0.1,REMOTE_ADDR"
