@@ -54,9 +54,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       isAdmin: !!user?.roles?.includes('ROLE_ADMIN'),
       login: (t: string) => {
-        // Persistance synchrone : le client API lit le token depuis
-        // localStorage. Sans ça, un fetch déclenché juste après login
-        // (navigation immédiate) partirait avant l'écriture du useEffect → 401.
+        // Synchronous persistence: the API client reads the token from
+        // localStorage. Without this, a fetch fired right after login
+        // (immediate navigation) would run before the useEffect write → 401.
         localStorage.setItem(STORAGE_KEY, t);
         setToken(t);
       },

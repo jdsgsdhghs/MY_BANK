@@ -16,7 +16,7 @@ function readInitialTheme(): Theme {
     if (stored === 'light' || stored === 'dark') return stored;
     if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) return 'dark';
   } catch {
-    /* localStorage indisponible : on retombe sur le thème clair */
+    /* localStorage unavailable: fall back to the light theme */
   }
   return 'light';
 }
@@ -29,7 +29,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, theme);
     } catch {
-      /* persistance optionnelle */
+      /* optional persistence */
     }
   }, [theme]);
 

@@ -30,7 +30,7 @@ export default function Users() {
     try {
       setUsers(await api.get<AdminUser[]>('/admin/users'));
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Chargement des utilisateurs impossible');
+      setError(err instanceof ApiError ? err.message : 'Could not load users');
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ export default function Users() {
         await api.put(`/admin/users/${editingId}`, payload);
       } else {
         if (!form.password) {
-          setError('Le mot de passe est requis pour un nouvel utilisateur');
+          setError('Password is required for a new user');
           return;
         }
         await api.post('/admin/users', { email, password: form.password, roles });
@@ -63,7 +63,7 @@ export default function Users() {
       resetForm();
       await load();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Échec de l'enregistrement");
+      setError(err instanceof ApiError ? err.message : 'Failed to save');
     }
   }
 
@@ -78,44 +78,44 @@ export default function Users() {
 
   async function handleDelete(u: AdminUser) {
     if (currentUser?.id === u.id) {
-      setError('Vous ne pouvez pas supprimer votre propre compte');
+      setError('You cannot delete your own account');
       return;
     }
-    if (!confirm(`Supprimer l'utilisateur ${u.email} ? Toutes ses données seront perdues.`)) return;
+    if (!confirm(`Delete user ${u.email}? All their data will be lost.`)) return;
     try {
       await api.delete(`/admin/users/${u.id}`);
       await load();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Échec de la suppression');
+      setError(err instanceof ApiError ? err.message : 'Failed to delete');
     }
   }
 
   return (
     <div className="users-page">
       <div className="page-header">
-        <h2>Utilisateurs</h2>
-        <p className="subtitle">Administration des comptes — réservé aux administrateurs.</p>
+        <h2>Users</h2>
+        <p className="subtitle">Account administration — admins only.</p>
       </div>
 
       {error && <div className="alert alert-error" role="alert">{error}</div>}
 
       <div className="card">
-        <div className="card-title">{editingId ? "Modifier l'utilisateur" : 'Nouvel utilisateur'}</div>
+        <div className="card-title">{editingId ? 'Edit user' : 'New user'}</div>
         <form className="user-form" onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="user-email">Adresse e-mail</label>
+            <label htmlFor="user-email">Email address</label>
             <input
               id="user-email"
               type="email"
               required
-              placeholder="nom@exemple.fr"
+              placeholder="name@example.com"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </div>
           <div className="field">
             <label htmlFor="user-password">
-              Mot de passe {editingId && <span className="hint">(vide = inchangé)</span>}
+              Password {editingId && <span className="hint">(blank = unchanged)</span>}
             </label>
             <input
               id="user-password"
@@ -127,7 +127,7 @@ export default function Users() {
             />
           </div>
           <div className="field">
-            <label className="field-label" style={{ visibility: 'hidden' }}>Rôle</label>
+            <label className="field-label" style={{ visibility: 'hidden' }}>Role</label>
             <div className="checkbox-row">
               <input
                 id="user-admin"
@@ -135,21 +135,21 @@ export default function Users() {
                 checked={form.isAdmin}
                 onChange={(e) => setForm({ ...form, isAdmin: e.target.checked })}
               />
-              <label htmlFor="user-admin">Administrateur</label>
+              <label htmlFor="user-admin">Administrator</label>
             </div>
           </div>
           <div className="field field-submit">
             <label className="field-label" style={{ visibility: 'hidden' }}>.</label>
-            <button type="submit" className="btn-primary">{editingId ? 'Mettre à jour' : 'Créer'}</button>
+            <button type="submit" className="btn-primary">{editingId ? 'Update' : 'Create'}</button>
             {editingId && (
-              <button type="button" className="btn-ghost" onClick={resetForm}>Annuler</button>
+              <button type="button" className="btn-ghost" onClick={resetForm}>Cancel</button>
             )}
           </div>
         </form>
       </div>
 
       <div className="card">
-        <div className="card-title">Comptes existants</div>
+        <div className="card-title">Existing accounts</div>
 
         {loading ? (
           <div className="user-list">
@@ -163,8 +163,8 @@ export default function Users() {
         ) : users.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><UserIcon size={24} /></div>
-            <h3>Aucun utilisateur</h3>
-            <p>Créez le premier compte avec le formulaire ci-dessus.</p>
+            <h3>No users</h3>
+            <p>Create the first account using the form above.</p>
           </div>
         ) : (
           <div className="user-list">
@@ -179,21 +179,21 @@ export default function Users() {
                     <div className="user-email">{u.email}</div>
                     <div className="user-badges">
                       <span className={`badge ${isAdmin ? 'badge-admin' : 'badge-user'}`}>
-                        {isAdmin ? 'Admin' : 'Utilisateur'}
+                        {isAdmin ? 'Admin' : 'User'}
                       </span>
-                      {isSelf && <span className="badge badge-you">Vous</span>}
+                      {isSelf && <span className="badge badge-you">You</span>}
                     </div>
                   </div>
                   <span className="actions">
-                    <button className="btn-ghost btn-sm btn-icon" aria-label="Modifier" onClick={() => startEdit(u)}>
+                    <button className="btn-ghost btn-sm btn-icon" aria-label="Edit" onClick={() => startEdit(u)}>
                       <EditIcon size={15} />
                     </button>
                     <button
                       className="btn-danger btn-sm btn-icon"
-                      aria-label="Supprimer"
+                      aria-label="Delete"
                       onClick={() => handleDelete(u)}
                       disabled={isSelf}
-                      title={isSelf ? 'Vous ne pouvez pas vous supprimer' : undefined}
+                      title={isSelf ? 'You cannot delete yourself' : undefined}
                     >
                       <TrashIcon size={15} />
                     </button>

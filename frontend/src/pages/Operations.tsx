@@ -19,10 +19,10 @@ const emptyForm: FormState = {
   categoryId: '',
 };
 
-/* Montant signé, format français, espace insécable avant l'euro. */
+/* Signed amount, English format, euro sign after a non-breaking space. */
 function formatAmount(n: number): string {
   const sign = n >= 0 ? '+' : '−';
-  const body = Math.abs(n).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const body = Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return `${sign}${body}${String.fromCharCode(160)}€`;
 }
 
@@ -49,7 +49,7 @@ export default function Operations() {
       setOperations(ops);
       setCategories(cats);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Chargement des données impossible');
+      setError(err instanceof ApiError ? err.message : 'Could not load data');
     } finally {
       setLoading(false);
     }
@@ -73,7 +73,7 @@ export default function Operations() {
       setForm(emptyForm);
       await loadAll();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Échec de l'enregistrement");
+      setError(err instanceof ApiError ? err.message : 'Failed to save');
     }
   }
 
@@ -88,12 +88,12 @@ export default function Operations() {
   }
 
   async function handleDelete(id: number) {
-    if (!confirm('Supprimer cette opération ?')) return;
+    if (!confirm('Delete this operation?')) return;
     try {
       await api.delete(`/operations/${id}`);
       await loadAll();
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Échec de la suppression');
+      setError(err instanceof ApiError ? err.message : 'Failed to delete');
     }
   }
 
@@ -104,62 +104,62 @@ export default function Operations() {
   return (
     <div className="operations">
       <div className="page-header">
-        <h2>Opérations</h2>
-        <p className="subtitle">Suivez vos revenus et vos dépenses, mois par mois.</p>
+        <h2>Operations</h2>
+        <p className="subtitle">Track your income and expenses, month by month.</p>
       </div>
 
       {error && <div className="alert alert-error" role="alert">{error}</div>}
 
-      {/* Carte solde — héro */}
-      <div className="summary" role="group" aria-label="Solde net">
+      {/* Balance card — hero */}
+      <div className="summary" role="group" aria-label="Net balance">
         <div className="summary__main">
-          <div className="summary__label">Solde net</div>
+          <div className="summary__label">Net balance</div>
           <div className="summary__value amount amount-lg">{formatAmount(total)}</div>
-          <div className="summary__meta">{operations.length} opération{operations.length > 1 ? 's' : ''} enregistrée{operations.length > 1 ? 's' : ''}</div>
+          <div className="summary__meta">{operations.length} operation{operations.length > 1 ? 's' : ''} recorded</div>
         </div>
         <div className="summary__breakdown">
           <div className="summary__stat">
             <span className="summary__stat-ico credit"><ArrowUpRightIcon size={15} /></span>
             <div>
-              <div className="k">Crédits</div>
+              <div className="k">Credits</div>
               <div className="v amount">{formatAmount(credits)}</div>
             </div>
           </div>
           <div className="summary__stat">
             <span className="summary__stat-ico debit"><ArrowDownLeftIcon size={15} /></span>
             <div>
-              <div className="k">Débits</div>
+              <div className="k">Debits</div>
               <div className="v amount">{formatAmount(debits)}</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Formulaire d'ajout */}
+      {/* Add form */}
       <div className="card">
-        <div className="card-title">{form.id ? "Modifier l'opération" : 'Nouvelle opération'}</div>
+        <div className="card-title">{form.id ? 'Edit operation' : 'New operation'}</div>
         <form className="operation-form" onSubmit={handleSubmit}>
           <div className="field">
-            <label htmlFor="op-label">Libellé</label>
+            <label htmlFor="op-label">Label</label>
             <input
               id="op-label"
               type="text"
               required
               maxLength={150}
-              placeholder="ex. Courses, Salaire…"
+              placeholder="e.g. Groceries, Salary…"
               value={form.label}
               onChange={(e) => setForm({ ...form, label: e.target.value })}
             />
           </div>
           <div className="field">
-            <label htmlFor="op-amount">Montant (€)</label>
+            <label htmlFor="op-amount">Amount (€)</label>
             <input
               id="op-amount"
               type="number"
               step="0.01"
               required
               className="input-amount"
-              placeholder="0,00"
+              placeholder="0.00"
               value={form.amount}
               onChange={(e) => setForm({ ...form, amount: e.target.value })}
             />
@@ -175,13 +175,13 @@ export default function Operations() {
             />
           </div>
           <div className="field">
-            <label htmlFor="op-cat">Catégorie</label>
+            <label htmlFor="op-cat">Category</label>
             <select
               id="op-cat"
               value={form.categoryId}
               onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
             >
-              <option value="">Sans catégorie</option>
+              <option value="">No category</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>{c.title}</option>
               ))}
@@ -189,20 +189,20 @@ export default function Operations() {
           </div>
           <div className="field field-submit">
             <button type="submit" className="btn-primary">
-              {form.id ? 'Mettre à jour' : "Ajouter l'opération"}
+              {form.id ? 'Update' : 'Add operation'}
             </button>
             {form.id && (
               <button type="button" className="btn-ghost" onClick={() => setForm(emptyForm)}>
-                Annuler
+                Cancel
               </button>
             )}
           </div>
         </form>
       </div>
 
-      {/* Historique */}
+      {/* History */}
       <div className="card">
-        <div className="card-title">Historique</div>
+        <div className="card-title">History</div>
 
         {loading ? (
           <div className="table-wrap">
@@ -210,9 +210,9 @@ export default function Operations() {
               <thead>
                 <tr>
                   <th className="col-date">Date</th>
-                  <th>Libellé</th>
-                  <th>Catégorie</th>
-                  <th className="col-amount">Montant</th>
+                  <th>Label</th>
+                  <th>Category</th>
+                  <th className="col-amount">Amount</th>
                   <th className="col-actions">Actions</th>
                 </tr>
               </thead>
@@ -237,8 +237,8 @@ export default function Operations() {
         ) : operations.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon"><ListIcon size={24} /></div>
-            <h3>Aucune opération pour l'instant</h3>
-            <p>Ajoutez votre première opération avec le formulaire ci-dessus pour voir votre solde évoluer.</p>
+            <h3>No operations yet</h3>
+            <p>Add your first operation using the form above to watch your balance change.</p>
           </div>
         ) : (
           <div className="table-wrap">
@@ -246,9 +246,9 @@ export default function Operations() {
               <thead>
                 <tr>
                   <th className="col-date">Date</th>
-                  <th>Libellé</th>
-                  <th>Catégorie</th>
-                  <th className="col-amount">Montant</th>
+                  <th>Label</th>
+                  <th>Category</th>
+                  <th className="col-amount">Amount</th>
                   <th className="col-actions">Actions</th>
                 </tr>
               </thead>
@@ -259,7 +259,7 @@ export default function Operations() {
                   return (
                     <tr key={op.id}>
                       <td className="col-date" data-th="Date"><span className="op-date">{formatDate(op.date)}</span></td>
-                      <td data-th="Libellé">
+                      <td data-th="Label">
                         <div className="op-label">
                           <span className={`op-ico ${credit ? 'credit' : 'debit'}`}>
                             {credit ? <ArrowUpRightIcon size={16} /> : <ArrowDownLeftIcon size={16} />}
@@ -267,22 +267,22 @@ export default function Operations() {
                           <span className="op-label__main">{op.label}</span>
                         </div>
                       </td>
-                      <td data-th="Catégorie">
+                      <td data-th="Category">
                         {op.category ? (
                           <span className="op-category">{op.category.title}</span>
                         ) : (
-                          <span className="op-category none">Sans catégorie</span>
+                          <span className="op-category none">No category</span>
                         )}
                       </td>
-                      <td className="col-amount" data-th="Montant">
+                      <td className="col-amount" data-th="Amount">
                         <span className={`amount ${credit ? 'amount-credit' : 'amount-debit'}`}>{formatAmount(value)}</span>
                       </td>
                       <td className="col-actions" data-th="Actions">
                         <div className="op-actions">
-                          <button className="btn-ghost btn-sm btn-icon" aria-label="Modifier" onClick={() => startEdit(op)}>
+                          <button className="btn-ghost btn-sm btn-icon" aria-label="Edit" onClick={() => startEdit(op)}>
                             <EditIcon size={15} />
                           </button>
-                          <button className="btn-danger btn-sm btn-icon" aria-label="Supprimer" onClick={() => handleDelete(op.id)}>
+                          <button className="btn-danger btn-sm btn-icon" aria-label="Delete" onClick={() => handleDelete(op.id)}>
                             <TrashIcon size={15} />
                           </button>
                         </div>

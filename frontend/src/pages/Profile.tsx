@@ -28,25 +28,25 @@ export default function Profile() {
     const wantsPasswordChange = password.length > 0;
 
     if (!trimmedEmail) {
-      setError('L\'adresse e-mail est requise');
+      setError('Email address is required');
       return;
     }
     if (!emailChanged && !wantsPasswordChange) {
-      setError('Aucune modification à enregistrer');
+      setError('Nothing to save');
       return;
     }
     if (wantsPasswordChange) {
       if (password.length < 8) {
-        setError('Le nouveau mot de passe doit comporter au moins 8 caractères');
+        setError('New password must be at least 8 characters');
         return;
       }
       if (password !== confirmPassword) {
-        setError('Les mots de passe ne correspondent pas');
+        setError('Passwords do not match');
         return;
       }
     }
     if (!currentPassword) {
-      setError('Veuillez saisir votre mot de passe actuel pour confirmer');
+      setError('Please enter your current password to confirm');
       return;
     }
 
@@ -61,9 +61,9 @@ export default function Profile() {
       setCurrentPassword('');
       setPassword('');
       setConfirmPassword('');
-      setSuccess('Vos modifications ont été enregistrées.');
+      setSuccess('Your changes have been saved.');
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Échec de la mise à jour');
+      setError(err instanceof ApiError ? err.message : 'Update failed');
     } finally {
       setSubmitting(false);
     }
@@ -72,8 +72,8 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <div className="page-header">
-        <h2>Profil</h2>
-        <p className="subtitle">Gérez votre identité et votre mot de passe.</p>
+        <h2>Profile</h2>
+        <p className="subtitle">Manage your identity and password.</p>
       </div>
 
       {error && <div className="alert alert-error" role="alert">{error}</div>}
@@ -84,7 +84,7 @@ export default function Profile() {
           <div className="profile-head__id">
             <span className="profile-head__email">{user?.email}</span>
             <span className={`badge ${isAdmin ? 'badge-admin' : 'badge-user'}`}>
-              {isAdmin ? 'Administrateur' : 'Utilisateur'}
+              {isAdmin ? 'Administrator' : 'User'}
             </span>
           </div>
         </div>
@@ -100,10 +100,10 @@ export default function Profile() {
           <div className="profile-section">
             <div className="profile-section__title">
               <UserIcon size={15} />
-              Identité
+              Identity
             </div>
             <div className="field">
-              <label htmlFor="profile-email">Adresse e-mail</label>
+              <label htmlFor="profile-email">Email address</label>
               <input
                 id="profile-email"
                 type="email"
@@ -118,22 +118,22 @@ export default function Profile() {
           <div className="profile-section">
             <div className="profile-section__title">
               <LockIcon size={15} />
-              Mot de passe
+              Password
             </div>
             <PasswordField
-              label="Nouveau mot de passe"
+              label="New password"
               id="profile-new-password"
               autoComplete="new-password"
               minLength={8}
-              placeholder="Laisser vide pour ne pas changer"
+              placeholder="Leave blank to keep current"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <PasswordField
-              label="Confirmation"
+              label="Confirm"
               id="profile-confirm-password"
               autoComplete="new-password"
-              placeholder="Retapez le nouveau mot de passe"
+              placeholder="Re-enter the new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
@@ -141,10 +141,10 @@ export default function Profile() {
             <div className="confirm-current">
               <div className="note">
                 <InfoIcon size={15} />
-                Pour toute modification, confirmez votre mot de passe actuel.
+                For any change, confirm your current password.
               </div>
               <PasswordField
-                label="Mot de passe actuel"
+                label="Current password"
                 id="profile-current-password"
                 autoComplete="current-password"
                 required
@@ -156,7 +156,7 @@ export default function Profile() {
 
           <div className="form-actions">
             <button type="submit" className="btn-primary" disabled={submitting}>
-              {submitting ? 'Enregistrement…' : 'Enregistrer les modifications'}
+              {submitting ? 'Saving…' : 'Save changes'}
             </button>
           </div>
         </form>

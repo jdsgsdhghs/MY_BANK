@@ -23,8 +23,8 @@ export default function Login() {
       login(res.token);
       navigate('/operations');
     } catch (err) {
-      if (err instanceof ApiError) setError('Identifiants invalides');
-      else setError('Connexion impossible. Réessayez plus tard.');
+      if (err instanceof ApiError) setError('Invalid credentials');
+      else setError('Unable to connect. Please try again later.');
     } finally {
       setSubmitting(false);
     }
@@ -32,22 +32,22 @@ export default function Login() {
 
   return (
     <div className="auth-shell">
-      {/* Panneau de marque (desktop) */}
+      {/* Brand panel (desktop) */}
       <aside className="auth-pane" aria-hidden="true">
         <div className="auth-pane__brand">
           <span className="brand__mark">M</span>
           <span className="brand__name">MyBank</span>
         </div>
         <div className="auth-pane__body">
-          <h2>Votre argent, en toute clarté.</h2>
-          <p>Suivez vos revenus et vos dépenses dans une interface simple, lisible et sécurisée.</p>
+          <h2>Your money, made clear.</h2>
+          <p>Track your income and expenses in a simple, clear and secure interface.</p>
           <ul className="auth-pane__points">
-            <li><ShieldIcon size={18} /> Connexion chiffrée de bout en bout</li>
-            <li><WalletIcon size={18} /> Solde et opérations en temps réel</li>
-            <li><TrendingUpIcon size={18} /> Des catégories pour mieux décider</li>
+            <li><ShieldIcon size={18} /> End-to-end encrypted connection</li>
+            <li><WalletIcon size={18} /> Balance and operations in real time</li>
+            <li><TrendingUpIcon size={18} /> Categories to help you decide</li>
           </ul>
         </div>
-        <div className="auth-pane__foot">Vos données restent privées. Toujours.</div>
+        <div className="auth-pane__foot">Your data stays private. Always.</div>
       </aside>
 
       {/* Formulaire */}
@@ -57,27 +57,27 @@ export default function Login() {
             <span className="brand__mark">M</span>
             <span className="brand__name">MyBank</span>
           </div>
-          <h1>Bonjour, content de vous revoir</h1>
-          <p className="auth-subtitle">Connectez-vous pour accéder à vos opérations.</p>
+          <h1>Welcome back</h1>
+          <p className="auth-subtitle">Sign in to access your operations.</p>
 
           {error && <div className="alert alert-error" role="alert">{error}</div>}
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="field">
-              <label htmlFor="email">Adresse e-mail</label>
+              <label htmlFor="email">Email address</label>
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="vous@exemple.fr"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <PasswordField
-              label="Mot de passe"
+              label="Password"
               id="password"
               autoComplete="current-password"
               required
@@ -87,16 +87,16 @@ export default function Login() {
             />
 
             <button type="submit" className="btn-primary btn-block" disabled={submitting}>
-              {submitting ? 'Connexion…' : 'Se connecter'}
+              {submitting ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
 
           <div className="auth-secure">
             <LockIcon size={15} />
-            Connexion chiffrée — vos identifiants ne sont jamais partagés.
+            Encrypted connection — your credentials are never shared.
           </div>
           <p className="auth-switch">
-            Pas encore de compte ? <Link to="/register">Créer un compte</Link>
+            No account yet? <Link to="/register">Create one</Link>
           </p>
         </div>
       </div>

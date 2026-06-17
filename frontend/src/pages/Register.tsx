@@ -6,11 +6,11 @@ import { LockIcon, ShieldIcon, TrendingUpIcon, WalletIcon } from '../components/
 import './Auth.css';
 
 const PW_HINTS = [
-  '8 caractères minimum. Mélangez lettres, chiffres et symboles.',
-  'Mot de passe faible.',
-  'Mot de passe correct.',
-  'Bon mot de passe.',
-  'Mot de passe robuste.',
+  'At least 8 characters. Mix letters, numbers and symbols.',
+  'Weak password.',
+  'Fair password.',
+  'Good password.',
+  'Strong password.',
 ];
 
 function passwordScore(v: string): number {
@@ -35,7 +35,7 @@ export default function Register() {
     e.preventDefault();
     setError(null);
     if (password.length < 8) {
-      setError('Le mot de passe doit comporter au moins 8 caractères.');
+      setError('Password must be at least 8 characters.');
       return;
     }
     setSubmitting(true);
@@ -44,7 +44,7 @@ export default function Register() {
       navigate('/login', { state: { registered: true } });
     } catch (err) {
       if (err instanceof ApiError) setError(err.message);
-      else setError("Inscription impossible.");
+      else setError('Could not sign up.');
     } finally {
       setSubmitting(false);
     }
@@ -52,45 +52,45 @@ export default function Register() {
 
   return (
     <div className="auth-shell">
-      {/* Panneau de marque (desktop) */}
+      {/* Brand panel (desktop) */}
       <aside className="auth-pane" aria-hidden="true">
         <div className="auth-pane__brand">
           <span className="brand__mark">M</span>
           <span className="brand__name">MyBank</span>
         </div>
         <div className="auth-pane__body">
-          <h2>Démarrez en quelques secondes.</h2>
-          <p>Un compte gratuit pour suivre votre budget, classer vos dépenses et garder le contrôle.</p>
+          <h2>Get started in seconds.</h2>
+          <p>A free account to track your budget, categorize your spending and stay in control.</p>
           <ul className="auth-pane__points">
-            <li><ShieldIcon size={18} /> Données chiffrées et stockées en Europe</li>
-            <li><WalletIcon size={18} /> Solde net calculé automatiquement</li>
-            <li><TrendingUpIcon size={18} /> Catégories personnalisables</li>
+            <li><ShieldIcon size={18} /> Data encrypted and stored in Europe</li>
+            <li><WalletIcon size={18} /> Net balance calculated automatically</li>
+            <li><TrendingUpIcon size={18} /> Customizable categories</li>
           </ul>
         </div>
-        <div className="auth-pane__foot">Sans engagement. Sans frais cachés.</div>
+        <div className="auth-pane__foot">No commitment. No hidden fees.</div>
       </aside>
 
-      {/* Formulaire */}
+      {/* Form */}
       <div className="auth-side">
         <div className="auth-card">
           <div className="auth-brand">
             <span className="brand__mark">M</span>
             <span className="brand__name">MyBank</span>
           </div>
-          <h1>Créer un compte</h1>
-          <p className="auth-subtitle">Quelques secondes suffisent pour démarrer.</p>
+          <h1>Create an account</h1>
+          <p className="auth-subtitle">It only takes a few seconds to get started.</p>
 
           {error && <div className="alert alert-error" role="alert">{error}</div>}
 
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="field">
-              <label htmlFor="email">Adresse e-mail</label>
+              <label htmlFor="email">Email address</label>
               <input
                 id="email"
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="vous@exemple.fr"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -98,12 +98,12 @@ export default function Register() {
 
             <div>
               <PasswordField
-                label="Mot de passe"
+                label="Password"
                 id="password"
                 autoComplete="new-password"
                 required
                 minLength={8}
-                placeholder="Au moins 8 caractères"
+                placeholder="At least 8 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -114,16 +114,16 @@ export default function Register() {
             </div>
 
             <button type="submit" className="btn-primary btn-block" disabled={submitting}>
-              {submitting ? 'Création…' : 'Créer mon compte'}
+              {submitting ? 'Creating…' : 'Create my account'}
             </button>
           </form>
 
           <div className="auth-secure">
             <LockIcon size={15} />
-            Vos données sont chiffrées et stockées en Europe.
+            Your data is encrypted and stored in Europe.
           </div>
           <p className="auth-switch">
-            Déjà inscrit ? <Link to="/login">Se connecter</Link>
+            Already have an account? <Link to="/login">Sign in</Link>
           </p>
         </div>
       </div>

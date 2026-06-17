@@ -5,8 +5,8 @@ type PasswordFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & 
   label: string;
 };
 
-/* Champ mot de passe avec bascule afficher/masquer.
-   Le bouton n'est pas dans l'ordre de tabulation pour ne pas gêner la saisie. */
+/* Password field with a show/hide toggle.
+   The button is kept out of the tab order so it doesn't interrupt typing. */
 export default function PasswordField({ label, id, ...rest }: PasswordFieldProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
@@ -21,7 +21,7 @@ export default function PasswordField({ label, id, ...rest }: PasswordFieldProps
           type="button"
           className="password-toggle"
           tabIndex={-1}
-          aria-label={visible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+          aria-label={visible ? 'Hide password' : 'Show password'}
           onClick={() => setVisible((v) => !v)}
         >
           {visible ? <EyeOffIcon /> : <EyeIcon />}

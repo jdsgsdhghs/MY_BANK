@@ -19,53 +19,53 @@ export default function Layout() {
 
   return (
     <div className="layout">
-      {/* --- Sidebar (desktop / tablette paysage) --- */}
+      {/* --- Sidebar (desktop / landscape tablet) --- */}
       <aside className="sidebar">
         <NavLink to="/operations" className="brand">
           <span className="brand__mark">M</span>
           <span className="brand__name">MyBank</span>
         </NavLink>
 
-        <nav className="sidebar__nav" aria-label="Navigation principale">
+        <nav className="sidebar__nav" aria-label="Main navigation">
           <NavLink to="/operations" className={navClass}>
             <WalletIcon size={19} />
-            <span>Opérations</span>
+            <span>Operations</span>
           </NavLink>
           <NavLink to="/categories" className={navClass}>
             <TagIcon size={19} />
-            <span>Catégories</span>
+            <span>Categories</span>
           </NavLink>
           {isAdmin && (
             <NavLink to="/users" className={navClass}>
               <UsersIcon size={19} />
-              <span>Utilisateurs</span>
+              <span>Users</span>
             </NavLink>
           )}
           <NavLink to="/profile" className={navClass}>
             <UserIcon size={19} />
-            <span>Profil</span>
+            <span>Profile</span>
           </NavLink>
         </nav>
 
         <div className="sidebar__footer">
-          <NavLink to="/profile" className="sidebar__user" aria-label="Voir mon profil">
+          <NavLink to="/profile" className="sidebar__user" aria-label="View my profile">
             <span className="sidebar__avatar">{initials}</span>
             <span className="sidebar__user-meta">
               <span className="sidebar__user-email">{user?.email}</span>
-              <span className="sidebar__user-role">{isAdmin ? 'Administrateur' : 'Compte personnel'}</span>
+              <span className="sidebar__user-role">{isAdmin ? 'Administrator' : 'Personal account'}</span>
             </span>
           </NavLink>
           <div className="sidebar__actions">
             <ThemeToggle />
             <button type="button" className="btn-ghost btn-sm sidebar__logout" onClick={handleLogout}>
               <LogOutIcon size={16} />
-              Se déconnecter
+              Log out
             </button>
           </div>
         </div>
       </aside>
 
-      {/* --- Barre supérieure (mobile / tablette portrait) --- */}
+      {/* --- Top bar (mobile / portrait tablet) --- */}
       <header className="topbar">
         <NavLink to="/operations" className="brand">
           <span className="brand__mark">M</span>
@@ -77,8 +77,8 @@ export default function Layout() {
             type="button"
             className="topbar__logout"
             onClick={handleLogout}
-            aria-label="Se déconnecter"
-            title="Se déconnecter"
+            aria-label="Log out"
+            title="Log out"
           >
             <LogOutIcon size={18} />
           </button>
@@ -91,25 +91,25 @@ export default function Layout() {
         </div>
       </main>
 
-      {/* --- Barre d'onglets (mobile) --- */}
-      <nav className="bottom-nav" aria-label="Navigation principale mobile">
+      {/* --- Tab bar (mobile) --- */}
+      <nav className="bottom-nav" aria-label="Main mobile navigation">
         <NavLink to="/operations" className={navClass}>
           <WalletIcon size={21} />
-          <span>Opérations</span>
+          <span>Operations</span>
         </NavLink>
         <NavLink to="/categories" className={navClass}>
           <TagIcon size={21} />
-          <span>Catégories</span>
+          <span>Categories</span>
         </NavLink>
         {isAdmin && (
           <NavLink to="/users" className={navClass}>
             <UsersIcon size={21} />
-            <span>Comptes</span>
+            <span>Accounts</span>
           </NavLink>
         )}
         <NavLink to="/profile" className={navClass}>
           <UserIcon size={21} />
-          <span>Profil</span>
+          <span>Profile</span>
         </NavLink>
       </nav>
     </div>

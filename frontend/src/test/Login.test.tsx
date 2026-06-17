@@ -25,9 +25,9 @@ describe('Login page', () => {
 
   it('renders inputs and submit button', () => {
     renderLogin();
-    expect(screen.getByLabelText('Adresse e-mail')).toBeInTheDocument();
-    expect(screen.getByLabelText('Mot de passe')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /se connecter/i })).toBeInTheDocument();
+    expect(screen.getByLabelText('Email address')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
   });
 
   it('shows error on invalid credentials', async () => {
@@ -39,12 +39,12 @@ describe('Login page', () => {
     ));
 
     renderLogin();
-    await userEvent.type(screen.getByLabelText('Adresse e-mail'), 'wrong@example.com');
-    await userEvent.type(screen.getByLabelText('Mot de passe'), 'wrongpass');
-    await userEvent.click(screen.getByRole('button', { name: /se connecter/i }));
+    await userEvent.type(screen.getByLabelText('Email address'), 'wrong@example.com');
+    await userEvent.type(screen.getByLabelText('Password'), 'wrongpass');
+    await userEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(/identifiants invalides/i);
+      expect(screen.getByRole('alert')).toHaveTextContent(/invalid credentials/i);
     });
   });
 
@@ -57,9 +57,9 @@ describe('Login page', () => {
     ));
 
     renderLogin();
-    await userEvent.type(screen.getByLabelText('Adresse e-mail'), 'user@example.com');
-    await userEvent.type(screen.getByLabelText('Mot de passe'), 'password123');
-    await userEvent.click(screen.getByRole('button', { name: /se connecter/i }));
+    await userEvent.type(screen.getByLabelText('Email address'), 'user@example.com');
+    await userEvent.type(screen.getByLabelText('Password'), 'password123');
+    await userEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
       expect(screen.getByText('OPS PAGE')).toBeInTheDocument();

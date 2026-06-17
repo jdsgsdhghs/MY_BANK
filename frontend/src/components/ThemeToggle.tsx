@@ -10,8 +10,8 @@ export default function ThemeToggle() {
       type="button"
       className="theme-toggle"
       onClick={toggleTheme}
-      aria-label={isDark ? 'Activer le thème clair' : 'Activer le thème sombre'}
-      title="Thème clair / sombre"
+      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+      title="Light / dark theme"
     >
       {isDark ? <SunIcon /> : <MoonIcon />}
     </button>

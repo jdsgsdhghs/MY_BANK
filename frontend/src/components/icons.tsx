@@ -1,7 +1,7 @@
 import { SVGProps } from 'react';
 
-/* Jeu d'icônes au trait (stroke = currentColor), réutilisable dans toute l'UI.
-   Taille par défaut 18px, surchargée via la prop width/height. */
+/* Line icon set (stroke = currentColor), reusable across the whole UI.
+   Default size 18px, overridable via the width/height prop. */
 const base: SVGProps<SVGSVGElement> = {
   viewBox: '0 0 24 24',
   fill: 'none',
