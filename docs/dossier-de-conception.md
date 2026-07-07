@@ -25,14 +25,18 @@
 - Testable + déployable rapidement (CI/CD).
 
 **Charte graphique :**
-- Typographie : **Montserrat**.
-- Palette : `#156064` (primaire, vert sombre) — `#00C49A` (secondaire, vert clair) — `#F8E16C` (accent, jaune).
+- Typographie : **Inter** (texte courant) + **Spline Sans** (titres).
+- Palette : `#A11A2E` (primaire, bordeaux) — `#7F1322` (bordeaux foncé) — `#C2703D` (accent, doré). Sémantique financière conservée : `#0C6B51` (crédits, vert) / `#BC3A2B` (débits, rouge). Thèmes clair **et** sombre.
+
+**Schéma d'architecture :** voir [`docs/architecture.svg`](architecture.svg) — flux frontend (Vercel) ↔ API REST (Render) ↔ base MySQL managée, sécurité (HTTPS, JWT, CORS) et chaîne CI/CD.
 
 ## 2. Adresse GitHub
 
-`https://github.com/jdsgsdhghs/mybank`
+`https://github.com/jdsgsdhghs/MY_BANK`
 
 ## 3. Documents de conception de l'interface
+
+> Maquettes vectorielles (SVG) dans [`docs/maquettes/`](maquettes/) : [zoning](maquettes/zoning.svg), [login](maquettes/wireframe-login.svg), [register](maquettes/wireframe-register.svg), [operations](maquettes/wireframe-operations.svg), [categories](maquettes/wireframe-categories.svg), [users](maquettes/wireframe-users.svg), [profile](maquettes/wireframe-profile.svg).
 
 ### 3.a Zoning
 
@@ -135,12 +139,11 @@ Tous les écrans suivent une grille à 3 zones :
 └──────────────────────────────────────────────┘
 ```
 
-### 3.c Maquette Figma
+### 3.c Maquettes
 
-À publier ici (lien public) :
-`https://www.figma.com/file/<TO_FILL_AFTER_DESIGN>/MyBank`
+Les **wireframes basse-fidélité** sont fournis au format **SVG** dans [`docs/maquettes/`](maquettes/) (un fichier par écran, voir le tableau ci-dessus). La **maquette haute-fidélité** correspond à l'application réelle : captures d'écran à placer dans `docs/screenshots/`.
 
-> NB : Les maquettes haute-fidélité reprennent la palette `#156064 / #00C49A / #F8E16C` et la typographie Montserrat. Les composants visuels exacts sont implémentés dans `frontend/src/styles/global.css`.
+> NB : Les maquettes reprennent la palette bordeaux (`#A11A2E / #7F1322 / #C2703D`) et la typographie Inter + Spline Sans. Les composants visuels exacts (jetons de couleur, thèmes clair/sombre) sont implémentés dans `frontend/src/styles/global.css`, qui fait foi.
 
 ### 3.d Enchaînement des écrans
 
@@ -175,6 +178,8 @@ Routes effectives (React Router) :
 - `/` → redirige vers `/operations`
 
 ## 4. Schémas de conception UML
+
+> Versions vectorielles (SVG) dans [`docs/diagrammes/`](diagrammes/) : [cas d'utilisation](diagrammes/cas-utilisation.svg), [classes](diagrammes/classes.svg), [séquence (création d'une opération)](diagrammes/sequence-creation-operation.svg).
 
 ### 4.a Diagramme de cas d'utilisation
 
@@ -404,39 +409,39 @@ Notes :
 
 ## 5. Schéma de base de données
 
-PostgreSQL 16. Schéma logique :
+MySQL 8.0 (moteur InnoDB, `utf8mb4`). Version vectorielle (SVG) : [`docs/diagrammes/base-de-donnees.svg`](diagrammes/base-de-donnees.svg). Schéma logique :
 
 ```
-┌──────────────────────────────┐
-│ user                         │
-├──────────────────────────────┤
-│ id           SERIAL PK       │
-│ email        VARCHAR(180) UQ │
-│ roles        JSON            │
-│ password     VARCHAR(255)    │
-└──────────────────────────────┘
+┌────────────────────────────────────┐
+│ user                               │
+├────────────────────────────────────┤
+│ id        INT PK AUTO_INCREMENT    │
+│ email     VARCHAR(180) UNIQUE      │
+│ roles     JSON                     │
+│ password  VARCHAR(255)             │
+└────────────────────────────────────┘
             │
             │ 1
             │
             │ *
-┌──────────────────────────────┐         ┌──────────────────────────────┐
-│ operation                    │         │ category                     │
-├──────────────────────────────┤         ├──────────────────────────────┤
-│ id           SERIAL PK       │         │ id           SERIAL PK       │
-│ label        VARCHAR(150)    │         │ title        VARCHAR(100)    │
-│ amount       NUMERIC(12,2)   │         │ owner_id     INT  FK→user.id │
-│ date         DATE            │         └──────────────────────────────┘
-│ owner_id     INT  FK→user.id │                          ▲
-│ category_id  INT? FK→cat.id  │──────────────────────────┘
-│             ON DELETE SET NULL                          *
-└──────────────────────────────┘
+┌────────────────────────────────────┐     ┌────────────────────────────────────┐
+│ operation                          │     │ category                           │
+├────────────────────────────────────┤     ├────────────────────────────────────┤
+│ id          INT PK AUTO_INCREMENT  │     │ id        INT PK AUTO_INCREMENT    │
+│ label       VARCHAR(150)           │     │ title     VARCHAR(100)             │
+│ amount      DECIMAL(12,2)          │     │ owner_id  INT NOT NULL FK→user.id  │
+│ date        DATE                   │     └────────────────────────────────────┘
+│ owner_id    INT NOT NULL FK→user.id│                          ▲
+│ category_id INT NULL FK→category.id│──────────────────────────┘
+│            ON DELETE SET NULL                                  *
+└────────────────────────────────────┘
 ```
 
-Indexes : unique sur `user.email`, et FK indexées par défaut.
+Indexes : unique sur `user.email`, FK indexées par défaut (InnoDB). En production, la base est un **MySQL managé externe** (ex. Aiven, TLS obligatoire) — voir `README_DEPLOYMENT.md`.
 
 ## 6. Adresse du dépôt GitHub / Docker
 
-- GitHub : `https://github.com/jdsgsdhghs/mybank`
+- GitHub : `https://github.com/jdsgsdhghs/MY_BANK`
 - Images Docker (publiées par CD) :
   - `ghcr.io/jdsgsdhghs/mybank-backend:latest`
   - `ghcr.io/jdsgsdhghs/mybank-frontend:latest`

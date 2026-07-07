@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="540" viewBox="0 0 860 540" font-family="Arial, Helvetica, sans-serif">
+  <rect width="860" height="540" fill="#ffffff"/>
+  <text x="30" y="36" font-size="20" font-weight="bold" fill="#222">Wireframe — Login</text>
+  <text x="30" y="56" font-size="12" fill="#777">Écran public. Layout en deux panneaux : marque (gauche) + formulaire (droite).</text>
+
+  <rect x="30" y="75" width="800" height="430" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Brand pane -->
+  <rect x="30" y="75" width="370" height="430" fill="#eef0f2" stroke="#c4c9ce"/>
+  <circle cx="70" cy="120" r="14" fill="#cfd5da"/>
+  <rect x="92" y="113" width="90" height="14" fill="#cfd5da"/>
+  <rect x="70" y="200" width="270" height="20" fill="#d8dde2"/>
+  <rect x="70" y="232" width="230" height="12" fill="#e2e6ea"/>
+  <rect x="70" y="250" width="250" height="12" fill="#e2e6ea"/>
+  <rect x="70" y="300" width="200" height="11" fill="#e2e6ea"/>
+  <rect x="70" y="322" width="200" height="11" fill="#e2e6ea"/>
+  <rect x="70" y="344" width="200" height="11" fill="#e2e6ea"/>
+  <text x="70" y="470" font-size="11" fill="#9aa0a6">Your data stays private. Always.</text>
+
+  <!-- Form pane -->
+  <text x="445" y="135" font-size="18" font-weight="bold" fill="#444">Welcome back</text>
+  <text x="445" y="158" font-size="12" fill="#888">Sign in to access your operations.</text>
+
+  <text x="445" y="200" font-size="11" fill="#777">Email address</text>
+  <rect x="445" y="208" width="350" height="40" fill="#fff" stroke="#c4c9ce"/>
+  <text x="458" y="233" font-size="12" fill="#b3b8bd">you@example.com</text>
+
+  <text x="445" y="278" font-size="11" fill="#777">Password</text>
+  <rect x="445" y="286" width="350" height="40" fill="#fff" stroke="#c4c9ce"/>
+  <text x="458" y="311" font-size="12" fill="#b3b8bd">••••••••</text>
+  <rect x="765" y="296" width="20" height="20" fill="#e2e6ea"/>
+
+  <rect x="445" y="350" width="350" height="44" fill="#9aa0a6"/>
+  <text x="620" y="378" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">Sign in</text>
+
+  <text x="620" y="430" font-size="11" fill="#888" text-anchor="middle">No account yet?  Create one</text>
+</svg>

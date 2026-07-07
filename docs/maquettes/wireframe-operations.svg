@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="600" viewBox="0 0 860 600" font-family="Arial, Helvetica, sans-serif">
+  <rect width="860" height="600" fill="#ffffff"/>
+  <text x="30" y="36" font-size="20" font-weight="bold" fill="#222">Wireframe — Operations (tableau de bord)</text>
+  <text x="30" y="56" font-size="12" fill="#777">Écran protégé. Solde net + formulaire d'ajout + historique des opérations.</text>
+
+  <rect x="30" y="75" width="800" height="500" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Sidebar -->
+  <rect x="30" y="75" width="150" height="500" fill="#eef0f2" stroke="#c4c9ce"/>
+  <circle cx="52" cy="103" r="10" fill="#cfd5da"/>
+  <rect x="68" y="98" width="70" height="12" fill="#cfd5da"/>
+  <rect x="46" y="140" width="118" height="26" fill="#cdd3d9"/>
+  <text x="58" y="158" font-size="11" fill="#555">Operations</text>
+  <rect x="46" y="172" width="118" height="26" fill="#d8dde2"/>
+  <text x="58" y="190" font-size="11" fill="#777">Categories</text>
+  <rect x="46" y="204" width="118" height="26" fill="#d8dde2"/>
+  <text x="58" y="222" font-size="11" fill="#777">Users</text>
+  <rect x="46" y="236" width="118" height="26" fill="#d8dde2"/>
+  <text x="58" y="254" font-size="11" fill="#777">Profile</text>
+  <line x1="46" y1="520" x2="164" y2="520" stroke="#c4c9ce"/>
+  <circle cx="58" cy="545" r="9" fill="#d8dde2"/>
+  <rect x="74" y="540" width="60" height="9" fill="#d8dde2"/>
+
+  <!-- Header -->
+  <text x="205" y="105" font-size="16" font-weight="bold" fill="#444">Operations</text>
+  <text x="205" y="124" font-size="11" fill="#999">Track your income and expenses, month by month.</text>
+
+  <!-- Summary card -->
+  <rect x="205" y="140" width="610" height="80" fill="#e7eaed" stroke="#cfd5da"/>
+  <text x="225" y="165" font-size="10" fill="#888">Net balance</text>
+  <text x="225" y="195" font-size="24" font-weight="bold" fill="#555">+0.00 €</text>
+  <rect x="560" y="155" width="120" height="22" fill="#d8dde2"/><text x="568" y="171" font-size="10" fill="#777">Credits  +0.00 €</text>
+  <rect x="560" y="183" width="120" height="22" fill="#d8dde2"/><text x="568" y="199" font-size="10" fill="#777">Debits  −0.00 €</text>
+
+  <!-- New operation form -->
+  <rect x="205" y="232" width="610" height="96" fill="#fff" stroke="#dfe3e7"/>
+  <text x="220" y="254" font-size="12" font-weight="bold" fill="#666">New operation</text>
+  <rect x="220" y="266" width="150" height="36" fill="#fff" stroke="#c4c9ce"/><text x="228" y="289" font-size="10" fill="#b3b8bd">Label</text>
+  <rect x="380" y="266" width="100" height="36" fill="#fff" stroke="#c4c9ce"/><text x="388" y="289" font-size="10" fill="#b3b8bd">Amount</text>
+  <rect x="490" y="266" width="110" height="36" fill="#fff" stroke="#c4c9ce"/><text x="498" y="289" font-size="10" fill="#b3b8bd">Date</text>
+  <rect x="610" y="266" width="100" height="36" fill="#fff" stroke="#c4c9ce"/><text x="618" y="289" font-size="10" fill="#b3b8bd">Category</text>
+  <rect x="720" y="266" width="80" height="36" fill="#9aa0a6"/><text x="760" y="289" font-size="11" fill="#fff" text-anchor="middle">Add</text>
+
+  <!-- History table -->
+  <rect x="205" y="340" width="610" height="220" fill="#fff" stroke="#dfe3e7"/>
+  <text x="220" y="362" font-size="12" font-weight="bold" fill="#666">History</text>
+  <line x1="220" y1="374" x2="800" y2="374" stroke="#e2e6ea"/>
+  <text x="220" y="392" font-size="10" fill="#999">Date</text>
+  <text x="300" y="392" font-size="10" fill="#999">Label</text>
+  <text x="500" y="392" font-size="10" fill="#999">Category</text>
+  <text x="640" y="392" font-size="10" fill="#999">Amount</text>
+  <text x="740" y="392" font-size="10" fill="#999">Actions</text>
+  <line x1="220" y1="400" x2="800" y2="400" stroke="#e2e6ea"/>
+  <!-- rows -->
+  <g fill="#e2e6ea">
+    <rect x="220" y="412" width="50" height="10"/><rect x="300" y="412" width="150" height="10"/><rect x="500" y="412" width="80" height="10"/><rect x="640" y="412" width="60" height="10"/><rect x="740" y="410" width="16" height="14"/><rect x="762" y="410" width="16" height="14"/>
+    <rect x="220" y="442" width="50" height="10"/><rect x="300" y="442" width="150" height="10"/><rect x="500" y="442" width="80" height="10"/><rect x="640" y="442" width="60" height="10"/><rect x="740" y="440" width="16" height="14"/><rect x="762" y="440" width="16" height="14"/>
+    <rect x="220" y="472" width="50" height="10"/><rect x="300" y="472" width="150" height="10"/><rect x="500" y="472" width="80" height="10"/><rect x="640" y="472" width="60" height="10"/><rect x="740" y="470" width="16" height="14"/><rect x="762" y="470" width="16" height="14"/>
+    <rect x="220" y="502" width="50" height="10"/><rect x="300" y="502" width="150" height="10"/><rect x="500" y="502" width="80" height="10"/><rect x="640" y="502" width="60" height="10"/><rect x="740" y="500" width="16" height="14"/><rect x="762" y="500" width="16" height="14"/>
+  </g>
+</svg>

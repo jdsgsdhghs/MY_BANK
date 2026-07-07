@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="sarr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#444"/>
+    </marker>
+  </defs>
+  <rect width="900" height="560" fill="#ffffff"/>
+  <text x="30" y="38" font-size="20" font-weight="bold" fill="#222">Diagramme de séquence — Création d'une opération</text>
+
+  <!-- Lifeline heads -->
+  <g font-size="12" font-weight="bold" text-anchor="middle">
+    <rect x="40" y="70" width="140" height="34" rx="4" fill="#fff" stroke="#444"/><text x="110" y="92" fill="#333">Utilisateur</text>
+    <rect x="270" y="70" width="160" height="34" rx="4" fill="#fbf2f3" stroke="#A11A2E"/><text x="350" y="92" fill="#A11A2E">Frontend (React)</text>
+    <rect x="520" y="70" width="160" height="34" rx="4" fill="#eef0f2" stroke="#444"/><text x="600" y="92" fill="#333">API (Symfony)</text>
+    <rect x="770" y="70" width="100" height="34" rx="4" fill="#eef0f2" stroke="#444"/><text x="820" y="92" fill="#333">MySQL</text>
+  </g>
+
+  <!-- Lifelines -->
+  <g stroke="#bbb" stroke-dasharray="4,4">
+    <line x1="110" y1="104" x2="110" y2="510"/>
+    <line x1="350" y1="104" x2="350" y2="510"/>
+    <line x1="600" y1="104" x2="600" y2="510"/>
+    <line x1="820" y1="104" x2="820" y2="510"/>
+  </g>
+
+  <!-- Activation bars -->
+  <rect x="344" y="150" width="12" height="300" fill="#e7d7da" stroke="#A11A2E"/>
+  <rect x="594" y="190" width="12" height="210" fill="#dfe3e7" stroke="#444"/>
+  <rect x="814" y="260" width="12" height="70" fill="#dfe3e7" stroke="#444"/>
+
+  <!-- Messages -->
+  <g font-size="11" fill="#333">
+    <!-- 1 -->
+    <line x1="110" y1="150" x2="344" y2="150" stroke="#444" stroke-width="1.5" marker-end="url(#sarr)"/>
+    <text x="120" y="143">saisit l'opération et valide</text>
+    <!-- 2 -->
+    <line x1="356" y1="190" x2="594" y2="190" stroke="#444" stroke-width="1.5" marker-end="url(#sarr)"/>
+    <text x="366" y="183">POST /api/operations (+ JWT)</text>
+    <!-- self: JWT verify -->
+    <path d="M606,215 h30 v18 h-28" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#sarr)"/>
+    <text x="616" y="212" font-size="10" fill="#666">vérifie le JWT</text>
+    <!-- self: validation -->
+    <path d="M606,250 h30 v18 h-28" fill="none" stroke="#444" stroke-width="1.5" marker-end="url(#sarr)"/>
+    <text x="616" y="247" font-size="10" fill="#666">valide les données</text>
+    <!-- 5 INSERT -->
+    <line x1="606" y1="295" x2="814" y2="295" stroke="#444" stroke-width="1.5" marker-end="url(#sarr)"/>
+    <text x="616" y="288">INSERT operation</text>
+    <!-- 6 ok return -->
+    <line x1="814" y1="325" x2="606" y2="325" stroke="#777" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#sarr)"/>
+    <text x="640" y="318" fill="#777">ok</text>
+    <!-- 7 201 -->
+    <line x1="594" y1="395" x2="356" y2="395" stroke="#777" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#sarr)"/>
+    <text x="370" y="388" fill="#777">201 Created + JSON</text>
+    <!-- 8 render -->
+    <line x1="344" y1="440" x2="110" y2="440" stroke="#777" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#sarr)"/>
+    <text x="120" y="433" fill="#777">met à jour la liste / le solde</text>
+  </g>
+
+  <text x="30" y="500" font-size="11" fill="#999">Cas d'erreur : 401 (JWT invalide), 400 (données invalides), 404 (catégorie introuvable).</text>
+</svg>

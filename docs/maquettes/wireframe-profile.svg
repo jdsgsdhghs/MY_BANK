@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="580" viewBox="0 0 860 580" font-family="Arial, Helvetica, sans-serif">
+  <rect width="860" height="580" fill="#ffffff"/>
+  <text x="30" y="36" font-size="20" font-weight="bold" fill="#222">Wireframe — Profile</text>
+  <text x="30" y="56" font-size="12" fill="#777">Écran protégé (tout utilisateur). Modification de l'e-mail et du mot de passe.</text>
+
+  <rect x="30" y="75" width="800" height="505" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Sidebar -->
+  <rect x="30" y="75" width="150" height="505" fill="#eef0f2" stroke="#c4c9ce"/>
+  <circle cx="52" cy="103" r="10" fill="#cfd5da"/>
+  <rect x="68" y="98" width="70" height="12" fill="#cfd5da"/>
+  <rect x="46" y="140" width="118" height="26" fill="#d8dde2"/><text x="58" y="158" font-size="11" fill="#777">Operations</text>
+  <rect x="46" y="172" width="118" height="26" fill="#d8dde2"/><text x="58" y="190" font-size="11" fill="#777">Categories</text>
+  <rect x="46" y="204" width="118" height="26" fill="#d8dde2"/><text x="58" y="222" font-size="11" fill="#777">Users</text>
+  <rect x="46" y="236" width="118" height="26" fill="#cdd3d9"/><text x="58" y="254" font-size="11" fill="#555">Profile</text>
+  <line x1="46" y1="500" x2="164" y2="500" stroke="#c4c9ce"/>
+  <circle cx="58" cy="525" r="9" fill="#d8dde2"/>
+  <rect x="74" y="520" width="60" height="9" fill="#d8dde2"/>
+
+  <!-- Header -->
+  <text x="205" y="105" font-size="16" font-weight="bold" fill="#444">Profile</text>
+  <text x="205" y="124" font-size="11" fill="#999">Manage your identity and password.</text>
+
+  <!-- Card -->
+  <rect x="205" y="140" width="610" height="424" fill="#fff" stroke="#dfe3e7"/>
+  <!-- head -->
+  <circle cx="240" cy="178" r="20" fill="#cfd5da"/>
+  <rect x="270" y="166" width="180" height="12" fill="#e2e6ea"/>
+  <rect x="270" y="184" width="80" height="16" fill="#dfe3e7"/>
+
+  <!-- Identity section -->
+  <text x="225" y="232" font-size="11" font-weight="bold" fill="#666">Identity</text>
+  <text x="225" y="252" font-size="10" fill="#777">Email address</text>
+  <rect x="225" y="258" width="560" height="38" fill="#fff" stroke="#c4c9ce"/>
+
+  <!-- Password section -->
+  <text x="225" y="330" font-size="11" font-weight="bold" fill="#666">Password</text>
+  <text x="225" y="350" font-size="10" fill="#777">New password</text>
+  <rect x="225" y="356" width="560" height="36" fill="#fff" stroke="#c4c9ce"/><text x="233" y="378" font-size="10" fill="#b3b8bd">Leave blank to keep current</text>
+  <text x="225" y="410" font-size="10" fill="#777">Confirm</text>
+  <rect x="225" y="416" width="560" height="36" fill="#fff" stroke="#c4c9ce"/>
+  <text x="225" y="470" font-size="10" fill="#777">Current password (confirmation)</text>
+  <rect x="225" y="476" width="560" height="36" fill="#fff" stroke="#c4c9ce"/>
+
+  <!-- Save -->
+  <rect x="645" y="520" width="140" height="38" fill="#9aa0a6"/>
+  <text x="715" y="544" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">Save changes</text>
+</svg>

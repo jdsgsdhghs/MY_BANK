@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="580" viewBox="0 0 860 580" font-family="Arial, Helvetica, sans-serif">
+  <rect width="860" height="580" fill="#ffffff"/>
+  <text x="30" y="36" font-size="20" font-weight="bold" fill="#222">Wireframe — Users (admin)</text>
+  <text x="30" y="56" font-size="12" fill="#777">Écran protégé réservé aux administrateurs (ROLE_ADMIN). Gestion des comptes.</text>
+
+  <rect x="30" y="75" width="800" height="480" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Sidebar -->
+  <rect x="30" y="75" width="150" height="480" fill="#eef0f2" stroke="#c4c9ce"/>
+  <circle cx="52" cy="103" r="10" fill="#cfd5da"/>
+  <rect x="68" y="98" width="70" height="12" fill="#cfd5da"/>
+  <rect x="46" y="140" width="118" height="26" fill="#d8dde2"/><text x="58" y="158" font-size="11" fill="#777">Operations</text>
+  <rect x="46" y="172" width="118" height="26" fill="#d8dde2"/><text x="58" y="190" font-size="11" fill="#777">Categories</text>
+  <rect x="46" y="204" width="118" height="26" fill="#cdd3d9"/><text x="58" y="222" font-size="11" fill="#555">Users</text>
+  <rect x="46" y="236" width="118" height="26" fill="#d8dde2"/><text x="58" y="254" font-size="11" fill="#777">Profile</text>
+  <line x1="46" y1="500" x2="164" y2="500" stroke="#c4c9ce"/>
+  <circle cx="58" cy="525" r="9" fill="#d8dde2"/>
+  <rect x="74" y="520" width="60" height="9" fill="#d8dde2"/>
+
+  <!-- Header -->
+  <text x="205" y="105" font-size="16" font-weight="bold" fill="#444">Users</text>
+  <text x="205" y="124" font-size="11" fill="#999">Account administration — admins only.</text>
+
+  <!-- New user form -->
+  <rect x="205" y="140" width="610" height="96" fill="#fff" stroke="#dfe3e7"/>
+  <text x="220" y="162" font-size="12" font-weight="bold" fill="#666">New user</text>
+  <rect x="220" y="174" width="220" height="36" fill="#fff" stroke="#c4c9ce"/><text x="228" y="197" font-size="10" fill="#b3b8bd">Email address</text>
+  <rect x="450" y="174" width="160" height="36" fill="#fff" stroke="#c4c9ce"/><text x="458" y="197" font-size="10" fill="#b3b8bd">Password</text>
+  <rect x="622" y="182" width="16" height="16" fill="#e2e6ea"/><text x="645" y="195" font-size="10" fill="#777">Administrator</text>
+  <rect x="722" y="174" width="78" height="36" fill="#9aa0a6"/><text x="761" y="197" font-size="11" fill="#fff" text-anchor="middle">Create</text>
+
+  <!-- List -->
+  <rect x="205" y="248" width="610" height="286" fill="#fff" stroke="#dfe3e7"/>
+  <text x="220" y="270" font-size="12" font-weight="bold" fill="#666">Existing accounts</text>
+  <g>
+    <line x1="220" y1="286" x2="800" y2="286" stroke="#eef0f2"/>
+    <circle cx="238" cy="314" r="13" fill="#cfd5da"/><rect x="262" y="302" width="180" height="10" fill="#e2e6ea"/><rect x="262" y="318" width="70" height="14" fill="#dfe3e7"/><rect x="744" y="306" width="18" height="16" fill="#e2e6ea"/><rect x="768" y="306" width="18" height="16" fill="#e2e6ea"/>
+    <line x1="220" y1="344" x2="800" y2="344" stroke="#eef0f2"/>
+    <circle cx="238" cy="372" r="13" fill="#cfd5da"/><rect x="262" y="360" width="180" height="10" fill="#e2e6ea"/><rect x="262" y="376" width="70" height="14" fill="#dfe3e7"/><rect x="340" y="376" width="40" height="14" fill="#dfe3e7"/><rect x="744" y="364" width="18" height="16" fill="#e2e6ea"/><rect x="768" y="364" width="18" height="16" fill="#eef0f2" stroke="#e2e6ea"/>
+    <line x1="220" y1="402" x2="800" y2="402" stroke="#eef0f2"/>
+    <circle cx="238" cy="430" r="13" fill="#cfd5da"/><rect x="262" y="418" width="180" height="10" fill="#e2e6ea"/><rect x="262" y="434" width="70" height="14" fill="#dfe3e7"/><rect x="744" y="422" width="18" height="16" fill="#e2e6ea"/><rect x="768" y="422" width="18" height="16" fill="#e2e6ea"/>
+    <line x1="220" y1="460" x2="800" y2="460" stroke="#eef0f2"/>
+    <circle cx="238" cy="488" r="13" fill="#cfd5da"/><rect x="262" y="476" width="180" height="10" fill="#e2e6ea"/><rect x="262" y="492" width="70" height="14" fill="#dfe3e7"/><rect x="744" y="480" width="18" height="16" fill="#e2e6ea"/><rect x="768" y="480" width="18" height="16" fill="#e2e6ea"/>
+  </g>
+  <text x="262" y="312" font-size="9" fill="#888">[User] / [Admin]  ·  [You] sur son propre compte (suppression désactivée)</text>
+</svg>

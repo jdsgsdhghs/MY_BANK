@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" font-family="Arial, Helvetica, sans-serif">
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="30" y="40" font-size="22" font-weight="bold" fill="#222">MyBank — Zoning</text>
+  <text x="30" y="62" font-size="13" fill="#777">Structure des écrans (responsive) — desktop / tablette paysage et mobile / tablette portrait</text>
+
+  <!-- ============ DESKTOP ============ -->
+  <text x="30" y="100" font-size="15" font-weight="bold" fill="#444">Desktop / tablette paysage</text>
+  <rect x="30" y="115" width="540" height="360" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Sidebar -->
+  <rect x="30" y="115" width="150" height="360" fill="#eef0f2" stroke="#c4c9ce"/>
+  <text x="105" y="150" font-size="13" font-weight="bold" fill="#555" text-anchor="middle">SIDEBAR</text>
+  <text x="105" y="170" font-size="11" fill="#888" text-anchor="middle">(navigation)</text>
+  <rect x="50" y="190" width="110" height="22" fill="#d8dde2"/>
+  <rect x="50" y="220" width="110" height="22" fill="#d8dde2"/>
+  <rect x="50" y="250" width="110" height="22" fill="#d8dde2"/>
+  <rect x="50" y="280" width="110" height="22" fill="#d8dde2"/>
+  <line x1="50" y1="420" x2="160" y2="420" stroke="#c4c9ce"/>
+  <circle cx="64" cy="445" r="10" fill="#d8dde2"/>
+  <rect x="82" y="440" width="78" height="10" fill="#d8dde2"/>
+
+  <!-- Main content -->
+  <text x="375" y="150" font-size="14" font-weight="bold" fill="#555" text-anchor="middle">CONTENT</text>
+  <text x="375" y="168" font-size="11" fill="#888" text-anchor="middle">(zone spécifique à la page)</text>
+  <rect x="205" y="190" width="345" height="46" fill="#f3f4f6" stroke="#dfe3e7"/>
+  <text x="218" y="217" font-size="11" fill="#999">Page header (titre + sous-titre)</text>
+  <rect x="205" y="252" width="345" height="90" fill="#f3f4f6" stroke="#dfe3e7"/>
+  <rect x="205" y="356" width="345" height="100" fill="#f3f4f6" stroke="#dfe3e7"/>
+
+  <!-- ============ MOBILE ============ -->
+  <text x="640" y="100" font-size="15" font-weight="bold" fill="#444">Mobile / tablette portrait</text>
+  <rect x="640" y="115" width="220" height="360" fill="#fafafa" stroke="#333" stroke-width="2"/>
+
+  <!-- Topbar -->
+  <rect x="640" y="115" width="220" height="44" fill="#eef0f2" stroke="#c4c9ce"/>
+  <text x="750" y="142" font-size="12" font-weight="bold" fill="#555" text-anchor="middle">TOPBAR (logo + actions)</text>
+
+  <!-- Content -->
+  <rect x="660" y="175" width="180" height="40" fill="#f3f4f6" stroke="#dfe3e7"/>
+  <text x="670" y="199" font-size="10" fill="#999">Page header</text>
+  <rect x="660" y="227" width="180" height="80" fill="#f3f4f6" stroke="#dfe3e7"/>
+  <rect x="660" y="319" width="180" height="92" fill="#f3f4f6" stroke="#dfe3e7"/>
+  <text x="750" y="270" font-size="11" fill="#888" text-anchor="middle">CONTENT</text>
+
+  <!-- Bottom nav -->
+  <rect x="640" y="431" width="220" height="44" fill="#eef0f2" stroke="#c4c9ce"/>
+  <text x="750" y="458" font-size="12" font-weight="bold" fill="#555" text-anchor="middle">BOTTOM NAV (onglets)</text>
+
+  <text x="30" y="510" font-size="12" fill="#999">Sur desktop la navigation est latérale (sidebar) ; sur mobile elle passe en barre supérieure + barre d'onglets en bas.</text>
+  <text x="30" y="530" font-size="12" fill="#999">La zone CONTENT accueille le contenu propre à chaque page (opérations, catégories, profil, utilisateurs).</text>
+</svg>
